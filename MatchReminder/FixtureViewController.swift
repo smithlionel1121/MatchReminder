@@ -8,6 +8,8 @@
 import UIKit
 
 class FixtureViewController: UIViewController {
+    
+    let apiClient = ApiClient(session: URLSession.shared, resourcePath: "competitions/PL/matches")
 
     override func viewDidLoad() {
         super.viewDidLoad()
