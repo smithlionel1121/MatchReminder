@@ -11,18 +11,18 @@ struct MatchesResponse: Codable {
     var count: Int
     var matches: [Match]
     
+}
+
+struct Match: Codable {
+    var id: Int
+    var status: String
+    var utcDate: Date
     
-    struct Match: Codable {
+    var homeTeam: Team
+    var awayTeam: Team
+    
+    struct Team: Codable {
         var id: Int
-        var status: String
-        var utcDate: Date
-        
-        var homeTeam: Team
-        var awayTeam: Team
-        
-        struct Team: Codable {
-            var id: Int
-            var name: String
-        }
+        var name: String
     }
 }
