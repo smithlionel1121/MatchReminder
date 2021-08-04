@@ -10,6 +10,9 @@ import UIKit
 class FixtureCollectionViewCell: UICollectionViewCell {
     
     static let identifier = fixtureCell
+    
+    private var fixtureStackView = UIStackView()
+    
     private var matchStackView = UIStackView()
     
     private var homeLabel: UILabel = {
@@ -33,6 +36,13 @@ class FixtureCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private var dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "\(DateFormatter.localizedString(from: Date(), dateStyle: .full, timeStyle: .short))"
+        label.textAlignment = .center
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureCell()
@@ -44,12 +54,23 @@ class FixtureCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell() {
-        contentView.addSubview(matchStackView)
-        configureFixtureView()
-        setFixtureViewConstraints()
+        contentView.addSubview(fixtureStackView)
+        configureFixtureStackView()
     }
     
-    func configureFixtureView() {
+    func configureFixtureStackView() {
+        fixtureStackView.axis = .vertical
+        fixtureStackView.spacing = 10
+        
+        fixtureStackView.addArrangedSubview(matchStackView)
+        fixtureStackView.addArrangedSubview(dateLabel)
+                
+        setFixtureStackViewConstraints()
+        configureMatchView()
+    }
+    
+    
+    func configureMatchView() {
         matchStackView.axis = .horizontal
         matchStackView.spacing = 5
         
@@ -60,12 +81,11 @@ class FixtureCollectionViewCell: UICollectionViewCell {
         setVersusLabelConstraints()
     }
     
-    func setFixtureViewConstraints() {
-        matchStackView.translatesAutoresizingMaskIntoConstraints = false
-        matchStackView.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
-        matchStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
-        matchStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
-        
+    func setFixtureStackViewConstraints() {
+        fixtureStackView.translatesAutoresizingMaskIntoConstraints = false
+        fixtureStackView.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
+        fixtureStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
+        fixtureStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
     }
     
     func setVersusLabelConstraints() {
