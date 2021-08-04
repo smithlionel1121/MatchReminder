@@ -10,11 +10,11 @@ import Foundation
 class FixturesViewModel {
     let apiClient = ApiClient(session: URLSession.shared, resourcePath: "competitions/PL/matches")
     
-    var matches: [Match]?
+    public var matches: [Match]?
 
     init() {}
     
-    func loadFixtures() {
+    func loadFixtures(completion: @escaping (Result<[Match], Error>) -> Void) {
         var request = URLRequest(url: apiClient.resourceURL)
         request.addValue(ApiKey, forHTTPHeaderField: "X-Auth-Token")
         
@@ -25,7 +25,7 @@ class FixturesViewModel {
                 jsonDecoder.dateDecodingStrategy = .iso8601
                 if let response = try? jsonDecoder.decode(MatchesResponse.self, from: jsonData) {
                     self.matches = response.matches
-                    print(response.matches[0])
+                    completion(.success(response.matches))
                 } else {
                     print("Failed")
                 }
@@ -33,6 +33,5 @@ class FixturesViewModel {
             }
         }
         dataTask.resume()
-            
     }
 }
