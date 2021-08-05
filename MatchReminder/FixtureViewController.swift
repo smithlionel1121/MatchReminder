@@ -35,6 +35,8 @@ class FixtureViewController: UIViewController {
         }
         
         collectionView.register(FixtureCollectionViewCell.self, forCellWithReuseIdentifier: fixtureCell)
+        collectionView.register(FixtureHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fixtureHeader)
+        
         collectionView.backgroundColor = .orange
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -87,6 +89,13 @@ extension FixtureViewController: UICollectionViewDataSource {
         cell.configureCell(match: matches[indexPath.row])
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fixtureHeader, for: indexPath) as! FixtureHeaderCollectionReusableView
+        header.configure()
+        
+        return header
+    }
 }
 
 extension FixtureViewController: UICollectionViewDelegateFlowLayout {
@@ -101,5 +110,9 @@ extension FixtureViewController: UICollectionViewDelegateFlowLayout {
         let width: CGFloat = floor(adjustedWidth / columns)
         let height: CGFloat = 100
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.size.width, height: 40)
     }
 }

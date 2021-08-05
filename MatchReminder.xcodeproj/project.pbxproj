@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70440FF526BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */; };
 		70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */; };
 		70AC7ED426AAEB3C00E74AC8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED326AAEB3C00E74AC8 /* SceneDelegate.swift */; };
 		70AC7ED626AAEB3C00E74AC8 /* FixtureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED526AAEB3C00E74AC8 /* FixtureViewController.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		70AC7ECE26AAEB3C00E74AC8 /* MatchReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70AC7ED326AAEB3C00E74AC8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				70AC7F1B26B4561300E74AC8 /* FixtureCollectionViewCell.swift */,
+				70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 			files = (
 				70AC7ED626AAEB3C00E74AC8 /* FixtureViewController.swift in Sources */,
 				70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */,
+				70440FF526BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift in Sources */,
 				70AC7F1826B4476600E74AC8 /* FixturesViewModel.swift in Sources */,
 				70AC7F0B26B1ABF600E74AC8 /* .envvar.swift in Sources */,
 				70AC7F0E26B2D87100E74AC8 /* Match.swift in Sources */,

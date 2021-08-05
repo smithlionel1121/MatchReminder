@@ -9,3 +9,4 @@ import Foundation
 
 
 let fixtureCell = "FixtureCell"
+let fixtureHeader = "FixtureHeader"
