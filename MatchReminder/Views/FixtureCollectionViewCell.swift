@@ -27,12 +27,14 @@ class FixtureCollectionViewCell: UICollectionViewCell {
     private var homeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .right
+        label.numberOfLines = 0
         return label
     }()
     
     private var awayLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }()
     
