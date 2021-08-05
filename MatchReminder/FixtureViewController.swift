@@ -13,6 +13,7 @@ class FixtureViewController: UIViewController {
     
     var fixturesViewModel: FixturesViewModel?
     var matches: [Match]?
+    var dateGroupedMatches: [Dictionary<Date, [Match?]>.Element]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,6 @@ class FixtureViewController: UIViewController {
         collectionView.backgroundColor = .orange
         collectionView.dataSource = self
         collectionView.delegate = self
-        
 
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +66,8 @@ class FixtureViewController: UIViewController {
               DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.matches = matches
+                self.arrangeDates()
+
                 self.collectionView?.reloadData()
               }
             case .failure(let error):
@@ -73,20 +75,37 @@ class FixtureViewController: UIViewController {
             }
         }
     }
+    
+    func arrangeDates() {
+        guard let matches = matches else { return }
+        var dateGroup = [Date: [Match?]]()
+
+        matches.forEach { match in
+            let day = Calendar.current.startOfDay(for: match.utcDate)
+            dateGroup[day, default: [Match]()].append(match)
+        }
+        
+        dateGroupedMatches = dateGroup.sorted { $0.key < $1.key }
+    }
 }
 
 extension FixtureViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return dateGroupedMatches?.count ?? 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return matches?.count ?? 0
+        return dateGroupedMatches?[section].value.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: fixtureCell, for: indexPath) as! FixtureCollectionViewCell
-        guard let matches = fixturesViewModel?.matches else {
+        guard let matches = dateGroupedMatches else {
             cell.configureCell()
             return cell
         }
-        cell.configureCell(match: matches[indexPath.row])
+
+        cell.configureCell(match: matches[indexPath.section].value[indexPath.row])
         return cell
     }
     
