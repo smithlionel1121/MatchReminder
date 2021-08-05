@@ -10,9 +10,16 @@ import UIKit
 class FixtureHeaderCollectionReusableView: UICollectionReusableView {
     static let identifier = fixtureHeader
     
+    var date: Date? {
+        didSet {
+            if let date = date {
+                headerLabel.text = "\(DateFormatter.localizedString(from: date, dateStyle: .full, timeStyle: .none))"
+            }
+        }
+    }
+    
     var headerLabel: UILabel = {
         let label = UILabel()
-        label.text = "Header"
         label.textAlignment = .center
         label.backgroundColor = .black
         label.textColor = .white
@@ -21,7 +28,8 @@ class FixtureHeaderCollectionReusableView: UICollectionReusableView {
         
     }()
     
-    public func configure() {
+    public func configure(date: Date? = nil) {
+        self.date = date
         addSubview(headerLabel)
     }
     
