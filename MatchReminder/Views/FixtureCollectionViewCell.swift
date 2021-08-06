@@ -19,7 +19,7 @@ class FixtureCollectionViewCell: UICollectionViewCell {
             homeLabel.text = match?.homeTeam.name
             awayLabel.text = match?.awayTeam.name
             if let date = match?.utcDate {
-                dateLabel.text = "\(DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .short))"
+                dateLabel.text = "\(DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short))"
             }
         }
     }
@@ -61,6 +61,7 @@ class FixtureCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(match: Match? = nil) {
+        self.backgroundColor = .orange
         self.match = match
         contentView.addSubview(fixtureStackView)
         configureFixtureStackView()
@@ -92,8 +93,8 @@ class FixtureCollectionViewCell: UICollectionViewCell {
     func setFixtureStackViewConstraints() {
         fixtureStackView.translatesAutoresizingMaskIntoConstraints = false
         fixtureStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        fixtureStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
-        fixtureStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
+        fixtureStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
+        fixtureStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
     }
     
     func setVersusLabelConstraints() {

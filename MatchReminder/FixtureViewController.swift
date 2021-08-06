@@ -26,7 +26,7 @@ class FixtureViewController: UIViewController {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 1
+        layout.minimumLineSpacing = 4
         layout.minimumInteritemSpacing = 1
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -38,7 +38,6 @@ class FixtureViewController: UIViewController {
         collectionView.register(FixtureCollectionViewCell.self, forCellWithReuseIdentifier: fixtureCell)
         collectionView.register(FixtureHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fixtureHeader)
         
-        collectionView.backgroundColor = .orange
         collectionView.dataSource = self
         collectionView.delegate = self
 
