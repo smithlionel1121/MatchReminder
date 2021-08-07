@@ -12,8 +12,6 @@ class FixtureViewController: UIViewController {
     private var collectionView: UICollectionView?
     
     var fixturesViewModel: FixturesViewModel?
-    var matches: [Match]?
-    var dateGroupedMatches: [Dictionary<Date, [Match?]>.Element]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,13 +57,13 @@ class FixtureViewController: UIViewController {
     }
     
     func loadFixtures() {
-        fixturesViewModel?.loadFixtures { (result: Result<[Match], Error>) in
+        fixturesViewModel?.loadFixtures { (result: Result<MatchesResponse, Error>) in
             switch result {
-            case .success(let matches):
+            case .success(let matchResponse):
               DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.matches = matches
-                self.arrangeDates()
+                self.fixturesViewModel?.matches = matchResponse.matches
+                self.fixturesViewModel?.arrangeDates()
 
                 self.collectionView?.reloadData()
               }
@@ -74,32 +72,20 @@ class FixtureViewController: UIViewController {
             }
         }
     }
-    
-    func arrangeDates() {
-        guard let matches = matches else { return }
-        var dateGroup = [Date: [Match?]]()
-
-        matches.forEach { match in
-            let day = Calendar.current.startOfDay(for: match.utcDate)
-            dateGroup[day, default: [Match]()].append(match)
-        }
-        
-        dateGroupedMatches = dateGroup.sorted { $0.key < $1.key }
-    }
 }
 
 extension FixtureViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return dateGroupedMatches?.count ?? 1
+        return fixturesViewModel?.dateGroupedMatches?.count ?? 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dateGroupedMatches?[section].value.count ?? 0
+        return fixturesViewModel?.dateGroupedMatches?[section].value.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: fixtureCell, for: indexPath) as! FixtureCollectionViewCell
-        guard let matches = dateGroupedMatches else {
+        guard let matches = fixturesViewModel?.dateGroupedMatches else {
             cell.configureCell()
             return cell
         }
@@ -110,7 +96,7 @@ extension FixtureViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fixtureHeader, for: indexPath) as! FixtureHeaderCollectionReusableView
-        header.configure(date: dateGroupedMatches?[indexPath.section].key)
+        header.configure(date: fixturesViewModel?.dateGroupedMatches?[indexPath.section].key)
         return header
     }
 }
