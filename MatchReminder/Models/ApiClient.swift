@@ -9,11 +9,11 @@ import Foundation
 
 class ApiClient {
     
-    let session: URLSession
+    let session: NetworkSession
     let baseURL = "https://api.football-data.org/v2/"
     var resourceURL: URL
     
-    init(session: URLSession, resourcePath: String?) {
+    init(session: NetworkSession, resourcePath: String?) {
         self.session = session
         
         guard let resourceURL = URL(string: baseURL) else {
@@ -39,6 +39,9 @@ class ApiClient {
                 if let response = try? jsonDecoder.decode(T.self, from: jsonData) {
                     completion(.success(response))
                 } else {
+                    if let error = error {
+                        completion(.failure(error))
+                    }
                     print("Failed")
                 }
             
