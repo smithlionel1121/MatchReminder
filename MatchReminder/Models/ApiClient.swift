@@ -13,6 +13,14 @@ class ApiClient {
     let baseURL = "https://api.football-data.org/v2/"
     var resourceURL: URL
     
+    var path: String? {
+        didSet {
+            if let path = path, let url = URL(string: baseURL)?.appendingPathComponent(path) {
+                resourceURL = url
+            }
+        }
+    }
+    
     init(session: NetworkSession, resourcePath: String?) {
         self.session = session
         

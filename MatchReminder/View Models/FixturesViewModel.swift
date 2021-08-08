@@ -8,12 +8,26 @@
 import Foundation
 
 class FixturesViewModel {
-    let apiClient = ApiClient(session: URLSession.shared, resourcePath: "competitions/PL/matches")
+    var competitionId: String {
+        didSet {
+            resourcePath = "competitions/\(competitionId)/matches"
+        }
+    }
+    var resourcePath: String {
+        didSet {
+            self.apiClient.path = resourcePath
+        }
+    }
+    let apiClient: ApiClient
     
     public var matches: [Match]?
     public var dateGroupedMatches: [Dictionary<Date, [Match?]>.Element]?
 
-    init() {}
+    init(competitionId: String = "PL") {
+        self.competitionId = competitionId
+        self.resourcePath = "competitions/\(competitionId)/matches"
+        self.apiClient = ApiClient(session: URLSession.shared, resourcePath: resourcePath)
+    }
     
     func loadFixtures(completion: @escaping (Result<MatchesResponse, Error>) -> Void) {
         apiClient.fetchResource(completion: completion)
