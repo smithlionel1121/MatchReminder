@@ -1,0 +1,29 @@
+{
+    "count": 3,
+    "matches":
+    [
+        {
+        "id": 327362,
+        "status": "SCHEDULED",
+        "utcDate": "2021-08-13T19:00:00Z",
+        "homeTeam": {"id": 402, "name": "Brentford FC"},
+        "awayTeam": {"id": 57, "name": "Arsenal FC"}
+        },
+        
+        {
+        "id": 327357,
+        "status": "SCHEDULED",
+        "utcDate": "2021-08-14T11:30:00Z",
+        "homeTeam": {"id": 66, "name": "Manchester United FC"},
+        "awayTeam": {"id": 341, "name": "Leeds United FC"}
+        },
+        
+        {
+        "id": 327353,
+        "status": "SCHEDULED",
+        "utcDate": "2021-08-14T14:00:00Z",
+        "homeTeam": {"id": 346, "name": "Watford FC"},
+        "awayTeam": {"id": 58, "name": "Aston Villa FC"}
+        }
+    ]
+}

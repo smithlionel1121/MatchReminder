@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		70440FF526BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */; };
+		70440FF826C00B560071BC44 /* URLSession+NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70440FF726C00B560071BC44 /* URLSession+NetworkSession.swift */; };
 		70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */; };
 		70AC7ED426AAEB3C00E74AC8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED326AAEB3C00E74AC8 /* SceneDelegate.swift */; };
 		70AC7ED626AAEB3C00E74AC8 /* FixtureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED526AAEB3C00E74AC8 /* FixtureViewController.swift */; };
@@ -20,6 +21,9 @@
 		70AC7F1826B4476600E74AC8 /* FixturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7F1726B4476600E74AC8 /* FixturesViewModel.swift */; };
 		70AC7F1A26B44E6100E74AC8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7F1926B44E6100E74AC8 /* Constants.swift */; };
 		70AC7F1C26B4561300E74AC8 /* FixtureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7F1B26B4561300E74AC8 /* FixtureCollectionViewCell.swift */; };
+		70B6EB5126C026E3004B8A2B /* ApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB4C26C026E3004B8A2B /* ApiClientTests.swift */; };
+		70B6EB5226C026E3004B8A2B /* MatchesResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 70B6EB4D26C026E3004B8A2B /* MatchesResponse.json */; };
+		70B6EB5326C026E3004B8A2B /* MockNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB4E26C026E3004B8A2B /* MockNetworkSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		70440FF726C00B560071BC44 /* URLSession+NetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+NetworkSession.swift"; sourceTree = "<group>"; };
 		70AC7ECE26AAEB3C00E74AC8 /* MatchReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70AC7ED326AAEB3C00E74AC8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +55,9 @@
 		70AC7F1726B4476600E74AC8 /* FixturesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixturesViewModel.swift; sourceTree = "<group>"; };
 		70AC7F1926B44E6100E74AC8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		70AC7F1B26B4561300E74AC8 /* FixtureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureCollectionViewCell.swift; sourceTree = "<group>"; };
+		70B6EB4C26C026E3004B8A2B /* ApiClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClientTests.swift; sourceTree = "<group>"; };
+		70B6EB4D26C026E3004B8A2B /* MatchesResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MatchesResponse.json; sourceTree = "<group>"; };
+		70B6EB4E26C026E3004B8A2B /* MockNetworkSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetworkSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +78,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		70440FF626C00B220071BC44 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				70440FF726C00B560071BC44 /* URLSession+NetworkSession.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		70AC7EC526AAEB3C00E74AC8 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +115,7 @@
 				70AC7ED526AAEB3C00E74AC8 /* FixtureViewController.swift */,
 				70AC7F1626B4473D00E74AC8 /* View Models */,
 				70AC7EDA26AAEB3E00E74AC8 /* Assets.xcassets */,
+				70440FF626C00B220071BC44 /* Extensions */,
 				70AC7EDC26AAEB3E00E74AC8 /* LaunchScreen.storyboard */,
 				70AC7EDF26AAEB3E00E74AC8 /* Info.plist */,
 				70AC7F1926B44E6100E74AC8 /* Constants.swift */,
@@ -110,6 +127,9 @@
 			isa = PBXGroup;
 			children = (
 				70AC7EE826AAEB3E00E74AC8 /* MatchReminderTests.swift */,
+				70B6EB4C26C026E3004B8A2B /* ApiClientTests.swift */,
+				70B6EB4D26C026E3004B8A2B /* MatchesResponse.json */,
+				70B6EB4E26C026E3004B8A2B /* MockNetworkSession.swift */,
 				70AC7EEA26AAEB3E00E74AC8 /* Info.plist */,
 			);
 			path = MatchReminderTests;
@@ -230,6 +250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70B6EB5226C026E3004B8A2B /* MatchesResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70AC7ED626AAEB3C00E74AC8 /* FixtureViewController.swift in Sources */,
+				70440FF826C00B560071BC44 /* URLSession+NetworkSession.swift in Sources */,
 				70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */,
 				70440FF526BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift in Sources */,
 				70AC7F1826B4476600E74AC8 /* FixturesViewModel.swift in Sources */,
@@ -258,6 +280,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				70AC7EE926AAEB3E00E74AC8 /* MatchReminderTests.swift in Sources */,
+				70B6EB5326C026E3004B8A2B /* MockNetworkSession.swift in Sources */,
+				70B6EB5126C026E3004B8A2B /* ApiClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
