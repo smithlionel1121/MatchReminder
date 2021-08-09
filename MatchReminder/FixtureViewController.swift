@@ -7,9 +7,13 @@
 
 import UIKit
 
+var competitonOptions = ["Premier League", "Champions League"]
+
 class FixtureViewController: UIViewController {
 
-    private var collectionView: UICollectionView?
+    private var collectionView: UICollectionView!
+    private var competitionSelectionView: CompetitionSelectionView!
+    private var competitionPicker: UIPickerView!
     
     var fixturesViewModel: FixturesViewModel?
 
@@ -29,18 +33,21 @@ class FixtureViewController: UIViewController {
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        guard let collectionView = collectionView else {
-            return
-        }
-        
+        competitionSelectionView = CompetitionSelectionView(frame: .zero)
+        competitionPicker = UIPickerView()
+                
         collectionView.register(FixtureCollectionViewCell.self, forCellWithReuseIdentifier: fixtureCell)
         collectionView.register(FixtureHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fixtureHeader)
         
         collectionView.dataSource = self
         collectionView.delegate = self
 
+        competitionPicker.delegate = self
+        competitionPicker.dataSource = self
+        
+        view.addSubview(competitionSelectionView)
         view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        competitionSelectionView.configure(pickerView: competitionPicker)
         setUpConstraints()
     }
     
@@ -50,10 +57,23 @@ class FixtureViewController: UIViewController {
     }
     
     func setUpConstraints() {
-        collectionView?.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        setUpCompetitionSelectionViewConstraints()
+        setUpCollectionViewConstraints()
+    }
+    
+    func setUpCollectionViewConstraints() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView?.topAnchor.constraint(equalTo: competitionSelectionView.bottomAnchor).isActive = true
         collectionView?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         collectionView?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         collectionView?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+    }
+    
+    func setUpCompetitionSelectionViewConstraints() {
+        competitionSelectionView.translatesAutoresizingMaskIntoConstraints = false
+        competitionSelectionView?.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        competitionSelectionView?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        competitionSelectionView?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
     }
     
     func loadFixtures() {
@@ -117,5 +137,26 @@ extension FixtureViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.size.width, height: 40)
+    }
+}
+
+extension FixtureViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return competitonOptions[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        competitionSelectionView.competitionField.text = competitonOptions[row]
+        competitionSelectionView.competitionField.resignFirstResponder()
+    }
+}
+
+extension FixtureViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return competitonOptions.count
     }
 }
