@@ -25,6 +25,7 @@
 		70B6EB5226C026E3004B8A2B /* MatchesResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 70B6EB4D26C026E3004B8A2B /* MatchesResponse.json */; };
 		70B6EB5326C026E3004B8A2B /* MockNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB4E26C026E3004B8A2B /* MockNetworkSession.swift */; };
 		70B6EB5926C14D75004B8A2B /* FixtureCompetitionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB5826C14D75004B8A2B /* FixtureCompetitionSelectionView.swift */; };
+		70B6EB5C26C1820B004B8A2B /* Competition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB5B26C1820B004B8A2B /* Competition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		70B6EB4D26C026E3004B8A2B /* MatchesResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MatchesResponse.json; sourceTree = "<group>"; };
 		70B6EB4E26C026E3004B8A2B /* MockNetworkSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetworkSession.swift; sourceTree = "<group>"; };
 		70B6EB5826C14D75004B8A2B /* FixtureCompetitionSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureCompetitionSelectionView.swift; sourceTree = "<group>"; };
+		70B6EB5B26C1820B004B8A2B /* Competition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Competition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				70AC7F1626B4473D00E74AC8 /* View Models */,
 				70AC7EDA26AAEB3E00E74AC8 /* Assets.xcassets */,
 				70440FF626C00B220071BC44 /* Extensions */,
+				70B6EB5A26C181D3004B8A2B /* Enums */,
 				70AC7EDC26AAEB3E00E74AC8 /* LaunchScreen.storyboard */,
 				70AC7EDF26AAEB3E00E74AC8 /* Info.plist */,
 				70AC7F1926B44E6100E74AC8 /* Constants.swift */,
@@ -162,6 +165,14 @@
 				70AC7F1726B4476600E74AC8 /* FixturesViewModel.swift */,
 			);
 			path = "View Models";
+			sourceTree = "<group>";
+		};
+		70B6EB5A26C181D3004B8A2B /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				70B6EB5B26C1820B004B8A2B /* Competition.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +279,7 @@
 				70440FF826C00B560071BC44 /* URLSession+NetworkSession.swift in Sources */,
 				70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */,
 				70440FF526BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift in Sources */,
+				70B6EB5C26C1820B004B8A2B /* Competition.swift in Sources */,
 				70AC7F1826B4476600E74AC8 /* FixturesViewModel.swift in Sources */,
 				70AC7F0B26B1ABF600E74AC8 /* .envvar.swift in Sources */,
 				70AC7F0E26B2D87100E74AC8 /* Match.swift in Sources */,

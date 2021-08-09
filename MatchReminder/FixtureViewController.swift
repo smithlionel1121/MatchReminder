@@ -7,8 +7,6 @@
 
 import UIKit
 
-var competitonOptions = ["Premier League", "Champions League"]
-
 class FixtureViewController: UIViewController {
 
     private var collectionView: UICollectionView!
@@ -142,11 +140,12 @@ extension FixtureViewController: UICollectionViewDelegateFlowLayout {
 
 extension FixtureViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return competitonOptions[row]
+        
+        return Competition.allCases[row].rawValue
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        competitionSelectionView.competitionField.text = competitonOptions[row]
+        competitionSelectionView.competitionField.text = Competition.allCases[row].rawValue
         competitionSelectionView.competitionField.resignFirstResponder()
     }
 }
@@ -157,6 +156,6 @@ extension FixtureViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return competitonOptions.count
+        return Competition.allCases.count
     }
 }
