@@ -46,7 +46,7 @@ enum Competition: String, CaseIterable {
         case .worldCup:
             return "WC"
         case .europe:
-            return "ECW"
+            return "EC"
         }
     }
 }
