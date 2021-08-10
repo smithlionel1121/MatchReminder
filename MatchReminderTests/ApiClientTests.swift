@@ -21,7 +21,7 @@ class ApiClientTests: XCTestCase {
     func testFetchMatches() {
         let expect = expectation(description: "fetch matches")
         let apiClient = ApiClient(session: MockNetworkSession(), resourcePath: "competitions/PL/matches")
-        apiClient.fetchResource { (result: Result<MatchesResponse, Error>) in
+        apiClient.fetchResource { (result: Result<MatchesResponse, ApiError>) in
             expect.fulfill()
             switch result {
             case .success(let matchesResponse):

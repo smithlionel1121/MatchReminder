@@ -29,7 +29,7 @@ class FixturesViewModel {
         self.apiClient = ApiClient(session: URLSession.shared, resourcePath: resourcePath)
     }
     
-    func loadFixtures(completion: @escaping (Result<MatchesResponse, Error>) -> Void) {
+    func loadFixtures(completion: @escaping (Result<MatchesResponse, ApiError>) -> Void) {
         apiClient.fetchResource(completion: completion)
     }
     

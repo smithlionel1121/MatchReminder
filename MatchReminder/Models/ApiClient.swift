@@ -36,24 +36,33 @@ class ApiClient {
         
     }
     
-    func fetchResource<T>(completion: @escaping (Result<T, Error>) -> Void) where T: Codable {
+    func fetchResource<T>(completion: @escaping (Result<T, ApiError>) -> Void) where T: Codable {
         var request = URLRequest(url: resourceURL)
         request.addValue(ApiKey, forHTTPHeaderField: "X-Auth-Token")
         
         let dataTask = session.dataTask(with: request) { data, response, error in
-            if let jsonData = data {
+            
+            if let _ = error as? URLError {
+                completion(.failure(.couldNotConnectToHost))
+                return
+            }
+            
+            guard let jsonData = data else {
+                completion(.failure(.jsonError))
+                return
+            }
+            
+            do {
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.dateDecodingStrategy = .iso8601
-                if let response = try? jsonDecoder.decode(T.self, from: jsonData) {
-                    completion(.success(response))
-                } else {
-                    if let error = error {
-                        completion(.failure(error))
-                    }
-                    print("Failed")
-                }
-            
+                let resource = try jsonDecoder.decode(T.self, from: jsonData)
+                completion(.success(resource))
+            } catch {
+                let bodyString = String(data: data!, encoding: .utf8)
+                print("error \(String(describing: bodyString ))")
+                completion(.failure(.serverError))
             }
+            
         }
         dataTask.resume()
     }

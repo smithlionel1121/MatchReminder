@@ -26,6 +26,7 @@
 		70B6EB5326C026E3004B8A2B /* MockNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB4E26C026E3004B8A2B /* MockNetworkSession.swift */; };
 		70B6EB5926C14D75004B8A2B /* CompetitionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB5826C14D75004B8A2B /* CompetitionSelectionView.swift */; };
 		70B6EB5C26C1820B004B8A2B /* Competition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB5B26C1820B004B8A2B /* Competition.swift */; };
+		70B6EB5E26C29189004B8A2B /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB5D26C29189004B8A2B /* ApiError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		70B6EB4E26C026E3004B8A2B /* MockNetworkSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetworkSession.swift; sourceTree = "<group>"; };
 		70B6EB5826C14D75004B8A2B /* CompetitionSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompetitionSelectionView.swift; sourceTree = "<group>"; };
 		70B6EB5B26C1820B004B8A2B /* Competition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Competition.swift; sourceTree = "<group>"; };
+		70B6EB5D26C29189004B8A2B /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				70B6EB5B26C1820B004B8A2B /* Competition.swift */,
+				70B6EB5D26C29189004B8A2B /* ApiError.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				70B6EB5C26C1820B004B8A2B /* Competition.swift in Sources */,
 				70AC7F1826B4476600E74AC8 /* FixturesViewModel.swift in Sources */,
 				70AC7F0B26B1ABF600E74AC8 /* .envvar.swift in Sources */,
+				70B6EB5E26C29189004B8A2B /* ApiError.swift in Sources */,
 				70AC7F0E26B2D87100E74AC8 /* Match.swift in Sources */,
 				70B6EB5926C14D75004B8A2B /* CompetitionSelectionView.swift in Sources */,
 				70AC7F1C26B4561300E74AC8 /* FixtureCollectionViewCell.swift in Sources */,

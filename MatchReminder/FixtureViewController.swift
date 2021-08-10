@@ -75,7 +75,7 @@ class FixtureViewController: UIViewController {
     }
     
     func loadFixtures() {
-        fixturesViewModel?.loadFixtures { (result: Result<MatchesResponse, Error>) in
+        fixturesViewModel?.loadFixtures { (result: Result<MatchesResponse, ApiError>) in
             switch result {
             case .success(let matchResponse):
               DispatchQueue.main.async { [weak self] in
