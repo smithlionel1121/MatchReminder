@@ -45,7 +45,7 @@ class FixtureViewController: UIViewController {
         
         view.addSubview(competitionSelectionView)
         view.addSubview(collectionView)
-        competitionSelectionView.configure(pickerView: competitionPicker)
+        competitionSelectionView.configure(pickerView: competitionPicker, fixturesViewModel: fixturesViewModel, completion: loadFixtures)
         setUpConstraints()
     }
     
@@ -89,6 +89,11 @@ class FixtureViewController: UIViewController {
               print("error \(error)")
             }
         }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
 }
 
@@ -145,8 +150,8 @@ extension FixtureViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        competitionSelectionView.competitionField.text = Competition.allCases[row].rawValue
-        competitionSelectionView.competitionField.resignFirstResponder()
+        competitionSelectionView.selectedCompetition = Competition.allCases[row]
+        loadFixtures()
     }
 }
 
