@@ -8,9 +8,9 @@
 import Foundation
 
 class FixturesViewModel {
-    var competitionId: String {
+    var competition: Competition {
         didSet {
-            resourcePath = "competitions/\(competitionId)/matches"
+            resourcePath = "competitions/\(competition.id)/matches"
         }
     }
     var resourcePath: String {
@@ -23,9 +23,9 @@ class FixturesViewModel {
     public var matches: [Match]?
     public var dateGroupedMatches: [Dictionary<Date, [Match?]>.Element]?
 
-    init(competitionId: String = "PL") {
-        self.competitionId = competitionId
-        self.resourcePath = "competitions/\(competitionId)/matches"
+    init(competition: Competition = Competition.allCases[0]) {
+        self.competition = competition
+        self.resourcePath = "competitions/\(competition.id)/matches"
         self.apiClient = ApiClient(session: URLSession.shared, resourcePath: resourcePath)
     }
     
