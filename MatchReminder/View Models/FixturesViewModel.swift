@@ -27,6 +27,7 @@ class FixturesViewModel {
         self.competition = competition
         self.resourcePath = "competitions/\(competition.id)/matches"
         self.apiClient = ApiClient(session: URLSession.shared, resourcePath: resourcePath)
+        apiClient.queryParams = [URLQueryItem(name: "status", value: "SCHEDULED")]
     }
     
     func loadFixtures(completion: @escaping (Result<MatchesResponse, ApiError>) -> Void) {

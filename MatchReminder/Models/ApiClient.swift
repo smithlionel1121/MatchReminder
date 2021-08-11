@@ -11,33 +11,38 @@ class ApiClient {
     
     let session: NetworkSession
     let baseURL = "https://api.football-data.org/v2/"
-    var resourceURL: URL
+    var resourceURL: URLComponents
     
     var path: String? {
         didSet {
-            if let path = path, let url = URL(string: baseURL)?.appendingPathComponent(path) {
-                resourceURL = url
+            if let path = path {
+                resourceURL.path = "/v2/" + path
             }
         }
     }
     
-    init(session: NetworkSession, resourcePath: String?) {
+    var queryParams: [URLQueryItem]? {
+        didSet {
+            if let queryParams = queryParams {
+                resourceURL.queryItems = queryParams
+            }
+        }
+    }
+    
+    init(session: NetworkSession, resourcePath: String = "") {
         self.session = session
         
-        guard let resourceURL = URL(string: baseURL) else {
+        guard let url = URLComponents(string: baseURL + resourcePath) else {
             fatalError()
         }
         
-        if let resourcePath = resourcePath {
-            self.resourceURL = resourceURL.appendingPathComponent(resourcePath)
-        } else {
-            self.resourceURL = resourceURL
-        }
-        
+        resourceURL = url
     }
     
     func fetchResource<T>(completion: @escaping (Result<T, ApiError>) -> Void) where T: Codable {
-        var request = URLRequest(url: resourceURL)
+        guard let url = resourceURL.url else { return }
+        
+        var request = URLRequest(url: url)
         request.addValue(ApiKey, forHTTPHeaderField: "X-Auth-Token")
         
         let dataTask = session.dataTask(with: request) { data, response, error in
