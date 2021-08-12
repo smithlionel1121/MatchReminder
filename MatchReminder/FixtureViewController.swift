@@ -126,8 +126,15 @@ extension FixtureViewController: UICollectionViewDataSource {
 
 extension FixtureViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let columns: CGFloat = 1
+        var columns: CGFloat = 1
+        if UIScreen.main.bounds.width >= 800  {
+            if let matches = fixturesViewModel?.dateGroupedMatches {
+                let matchNum = matches[indexPath.section].value.count
+                if matchNum > 1  && !(matchNum % 2 == 1 && indexPath.row == matchNum - 1) {
+                columns = 2
+               }
+            }
+        }
         
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
         let collectionViewWidth = collectionView.bounds.width
