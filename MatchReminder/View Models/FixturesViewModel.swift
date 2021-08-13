@@ -9,6 +9,20 @@ import Foundation
 import EventKit
 
 class FixturesViewModel {
+    enum Filter: String, CaseIterable {
+        case fixtures = "Fixtures"
+        case results = "Results"
+        
+        func shouldInclude(date: Date) -> Bool {
+            switch self {
+            case .fixtures:
+                return date > Date()
+            case .results:
+                return date < Date()
+            }
+        }
+    }
+    
     var competition: Competition {
         didSet {
             resourcePath = "competitions/\(competition.id)/matches"
@@ -21,8 +35,12 @@ class FixturesViewModel {
     }
     let apiClient: ApiClient
     
-    public var matches: [Match]?
-    public var dateGroupedMatches: [Dictionary<Date, [Match?]>.Element]?
+    var matches: [Match]?
+    var dateGroupedMatches: [Dictionary<Date, [Match?]>.Element]?
+    
+    var filter: Filter = Filter.allCases[0]
+    var filteredMatches: [Match]?
+    
     
     private let eventStore = EKEventStore()
 
@@ -30,8 +48,6 @@ class FixturesViewModel {
         self.competition = competition
         self.resourcePath = "competitions/\(competition.id)/matches"
         self.apiClient = ApiClient(session: URLSession.shared, resourcePath: resourcePath)
-        apiClient.queryParams = [URLQueryItem(name: "status", value: "SCHEDULED")]
-
         requestAccess { (authorized) in
             if authorized {
                 print("Authorized")
@@ -44,7 +60,8 @@ class FixturesViewModel {
     }
     
     func arrangeDates() {
-        guard let matches = self.matches else { return }
+        filterDates()
+        guard let matches = self.filteredMatches else { return }
         var dateGroup = [Date: [Match?]]()
 
         matches.forEach { match in
@@ -52,7 +69,16 @@ class FixturesViewModel {
             dateGroup[day, default: [Match]()].append(match)
         }
         
-        dateGroupedMatches = dateGroup.sorted { $0.key < $1.key }
+        if filter == .results {
+            dateGroupedMatches = dateGroup.sorted { $0.key > $1.key }
+        } else {
+            dateGroupedMatches = dateGroup.sorted { $0.key < $1.key }
+        }
+    }
+    
+    func filterDates() {
+        guard let matches = self.matches else { return }
+        filteredMatches = matches.filter { filter.shouldInclude(date: $0.utcDate) }
     }
 }
 

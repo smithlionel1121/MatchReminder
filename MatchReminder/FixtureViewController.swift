@@ -19,10 +19,16 @@ class FixtureViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        navigationController?.navigationBar.topItem?.title = "Fixtures"
-        
         fixturesViewModel = FixturesViewModel()
         loadFixtures()
+        
+        let items = FixturesViewModel.Filter.allCases.map { $0.rawValue }
+        let filterSegmentedControl = UISegmentedControl(items: items)
+        filterSegmentedControl.selectedSegmentIndex = FixturesViewModel.Filter.allCases.firstIndex {$0 == fixturesViewModel?.filter } ?? 0
+        filterSegmentedControl.sizeToFit()
+        filterSegmentedControl.tintColor = .red
+        filterSegmentedControl.addTarget(self, action: #selector(segmentControlChanged(_:)), for: .valueChanged)
+        self.navigationItem.titleView = filterSegmentedControl
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -54,6 +60,11 @@ class FixtureViewController: UIViewController {
         loadFixtures()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     func setUpConstraints() {
         setUpCompetitionSelectionViewConstraints()
         setUpCollectionViewConstraints()
@@ -78,22 +89,27 @@ class FixtureViewController: UIViewController {
         fixturesViewModel?.loadFixtures { (result: Result<MatchesResponse, ApiError>) in
             switch result {
             case .success(let matchResponse):
-              DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.fixturesViewModel?.matches = matchResponse.matches
-                self.fixturesViewModel?.arrangeDates()
-
-                self.collectionView?.reloadData()
-              }
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.fixturesViewModel?.matches = matchResponse.matches
+                    self.fixturesViewModel?.arrangeDates()
+                    
+                    self.collectionView?.reloadData()
+                }
             case .failure(let error):
-              print("error \(error)")
+                print("error \(error)")
             }
         }
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        collectionView.collectionViewLayout.invalidateLayout()
+    
+    @objc
+    func segmentControlChanged(_ sender: UISegmentedControl) {
+        guard let fixturesViewModel = fixturesViewModel else { return }
+        let index = sender.selectedSegmentIndex
+        fixturesViewModel.filter  = FixturesViewModel.Filter.allCases[index]
+        fixturesViewModel.arrangeDates()
+        collectionView.reloadData()
     }
 }
 
