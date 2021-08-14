@@ -39,7 +39,7 @@ class ApiClient {
         resourceURL = url
     }
     
-    func fetchResource<T>(completion: @escaping (Result<T, ApiError>) -> Void) where T: Codable {
+    func fetchResource<T>(completion: @escaping (Result<T, ApiError>) -> Void) where T: Decodable {
         guard let url = resourceURL.url else { return }
         
         var request = URLRequest(url: url)
