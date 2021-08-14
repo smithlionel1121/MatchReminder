@@ -7,62 +7,21 @@
 
 import UIKit
 
-class FixtureCollectionViewCell: UICollectionViewCell {
+class FixtureCollectionViewCell: FixtureBaseCollectionViewCell {
     
     static let identifier = fixtureCell
     
     private var fixtureStackView = UIStackView()
     private var matchStackView = UIStackView()
-    
-    var match: Match? {
-        didSet {
-            homeLabel.text = match?.homeTeam.name
-            awayLabel.text = match?.awayTeam.name
-            if let date = match?.utcDate {
-                dateLabel.text = "\(DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short))"
-            }
-        }
-    }
-    
-    private var homeLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .right
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private var awayLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private var versusLabel: UILabel = {
+
+    var versusLabel: UILabel = {
         let label = UILabel()
         label.text = "v"
         label.textAlignment = .center
         return label
     }()
     
-    private var dateLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        return label
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        contentView.clipsToBounds = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configureCell(match: Match? = nil) {
-        self.backgroundColor = .orange
-        self.match = match
+    override func configureContent() {
         contentView.addSubview(fixtureStackView)
         configureFixtureStackView()
     }
@@ -83,6 +42,9 @@ class FixtureCollectionViewCell: UICollectionViewCell {
         matchStackView.axis = .horizontal
         matchStackView.spacing = 5
         
+        homeLabel.textAlignment = .right
+        awayLabel.textAlignment = .left
+                
         matchStackView.addArrangedSubview(homeLabel)
         matchStackView.addArrangedSubview(versusLabel)
         matchStackView.addArrangedSubview(awayLabel)
@@ -92,14 +54,18 @@ class FixtureCollectionViewCell: UICollectionViewCell {
     
     func setFixtureStackViewConstraints() {
         fixtureStackView.translatesAutoresizingMaskIntoConstraints = false
-        fixtureStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        fixtureStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
-        fixtureStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
+        NSLayoutConstraint.activate([
+            fixtureStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            fixtureStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            fixtureStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30)
+        ])
     }
     
     func setVersusLabelConstraints() {
         versusLabel.translatesAutoresizingMaskIntoConstraints = false
-        versusLabel.centerXAnchor.constraint(equalTo: matchStackView.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        versusLabel.widthAnchor.constraint(equalTo: matchStackView.safeAreaLayoutGuide.widthAnchor, multiplier: 0.05).isActive = true
+        NSLayoutConstraint.activate([
+            versusLabel.centerXAnchor.constraint(equalTo: matchStackView.safeAreaLayoutGuide.centerXAnchor),
+            versusLabel.widthAnchor.constraint(equalTo: matchStackView.safeAreaLayoutGuide.widthAnchor, multiplier: 0.05)
+        ])
     }
 }
