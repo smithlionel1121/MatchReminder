@@ -73,17 +73,21 @@ class FixtureViewController: UIViewController {
     
     func setUpCollectionViewConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView?.topAnchor.constraint(equalTo: competitionSelectionView.bottomAnchor).isActive = true
-        collectionView?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        collectionView?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        collectionView?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: competitionSelectionView.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        ])
     }
     
     func setUpCompetitionSelectionViewConstraints() {
         competitionSelectionView.translatesAutoresizingMaskIntoConstraints = false
-        competitionSelectionView?.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        competitionSelectionView?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        competitionSelectionView?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            competitionSelectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            competitionSelectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            competitionSelectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        ])
     }
     
     func loadFixtures() {
