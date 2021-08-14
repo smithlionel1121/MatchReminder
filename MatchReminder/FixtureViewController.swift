@@ -40,8 +40,9 @@ class FixtureViewController: UIViewController {
         competitionSelectionView = CompetitionSelectionView(frame: .zero)
         competitionPicker = UIPickerView()
                 
-        collectionView.register(FixtureCollectionViewCell.self, forCellWithReuseIdentifier: fixtureCell)
-        collectionView.register(FixtureHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fixtureHeader)
+        collectionView.register(FixtureCollectionViewCell.self, forCellWithReuseIdentifier: FixtureCollectionViewCell.identifier)
+        collectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
+        collectionView.register(FixtureHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FixtureHeaderCollectionReusableView.identifier)
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -123,13 +124,15 @@ extension FixtureViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: fixtureCell, for: indexPath) as! FixtureCollectionViewCell
-        guard let matches = fixturesViewModel?.dateGroupedMatches else {
-            cell.configureCell()
-            return cell
+        var cell: FixtureBaseCollectionViewCell
+
+        if fixturesViewModel?.filter == .results {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
+        } else {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: FixtureCollectionViewCell.identifier, for: indexPath) as! FixtureCollectionViewCell
         }
 
-        cell.configureCell(match: matches[indexPath.section].value[indexPath.row])
+        cell.configureCell(match: fixturesViewModel?.dateGroupedMatches?[indexPath.section].value[indexPath.row])
         return cell
     }
     

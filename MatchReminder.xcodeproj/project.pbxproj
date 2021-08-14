@@ -27,6 +27,8 @@
 		70B6EB5926C14D75004B8A2B /* CompetitionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB5826C14D75004B8A2B /* CompetitionSelectionView.swift */; };
 		70B6EB5C26C1820B004B8A2B /* Competition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB5B26C1820B004B8A2B /* Competition.swift */; };
 		70B6EB5E26C29189004B8A2B /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB5D26C29189004B8A2B /* ApiError.swift */; };
+		70B6EB6426C6D396004B8A2B /* ResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB6326C6D396004B8A2B /* ResultCollectionViewCell.swift */; };
+		70B6EB6626C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB6526C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		70B6EB5826C14D75004B8A2B /* CompetitionSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompetitionSelectionView.swift; sourceTree = "<group>"; };
 		70B6EB5B26C1820B004B8A2B /* Competition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Competition.swift; sourceTree = "<group>"; };
 		70B6EB5D26C29189004B8A2B /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
+		70B6EB6326C6D396004B8A2B /* ResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCollectionViewCell.swift; sourceTree = "<group>"; };
+		70B6EB6526C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureBaseCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				70AC7F1B26B4561300E74AC8 /* FixtureCollectionViewCell.swift */,
+				70B6EB6526C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift */,
+				70B6EB6326C6D396004B8A2B /* ResultCollectionViewCell.swift */,
 				70B6EB5826C14D75004B8A2B /* CompetitionSelectionView.swift */,
 				70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */,
 			);
@@ -282,10 +288,12 @@
 				70440FF826C00B560071BC44 /* URLSession+NetworkSession.swift in Sources */,
 				70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */,
 				70440FF526BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift in Sources */,
+				70B6EB6426C6D396004B8A2B /* ResultCollectionViewCell.swift in Sources */,
 				70B6EB5C26C1820B004B8A2B /* Competition.swift in Sources */,
 				70AC7F1826B4476600E74AC8 /* FixturesViewModel.swift in Sources */,
 				70AC7F0B26B1ABF600E74AC8 /* .envvar.swift in Sources */,
 				70B6EB5E26C29189004B8A2B /* ApiError.swift in Sources */,
+				70B6EB6626C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift in Sources */,
 				70AC7F0E26B2D87100E74AC8 /* Match.swift in Sources */,
 				70B6EB5926C14D75004B8A2B /* CompetitionSelectionView.swift in Sources */,
 				70AC7F1C26B4561300E74AC8 /* FixtureCollectionViewCell.swift in Sources */,
