@@ -13,9 +13,7 @@ class FixtureBaseCollectionViewCell: UICollectionViewCell {
         didSet {
             homeLabel.text = match?.homeTeam.name
             awayLabel.text = match?.awayTeam.name
-            if let date = match?.utcDate {
-                dateLabel.text = "\(DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short))"
-            }
+            updateMatch()
         }
     }
     
@@ -28,12 +26,6 @@ class FixtureBaseCollectionViewCell: UICollectionViewCell {
     var awayLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        return label
-    }()
-    
-    var dateLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
         return label
     }()
     
@@ -52,5 +44,6 @@ class FixtureBaseCollectionViewCell: UICollectionViewCell {
         self.configureContent()
     }
     
-    func configureContent() {}    
+    func configureContent() {}
+    func updateMatch() {}
 }

@@ -21,9 +21,21 @@ class FixtureCollectionViewCell: FixtureBaseCollectionViewCell {
         return label
     }()
     
+    var dateLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        return label
+    }()
+    
     override func configureContent() {
         contentView.addSubview(fixtureStackView)
         configureFixtureStackView()
+    }
+    
+    override func updateMatch() {
+        if let date = match?.utcDate {
+            dateLabel.text = "\(DateFormatter.localizedString(from: date, dateStyle: .none, timeStyle: .short))"
+        }
     }
     
     func configureFixtureStackView() {
