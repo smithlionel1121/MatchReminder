@@ -11,3 +11,6 @@ import Foundation
 let fixtureCell = "FixtureCell"
 let fixtureHeader = "FixtureHeader"
 let resultCell = "ResultCell"
+
+let calendarIdentifierKey = "PrimaryCalendar"
+let calendarBackupName = "Football"

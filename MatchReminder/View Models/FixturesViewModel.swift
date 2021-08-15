@@ -43,15 +43,46 @@ class FixturesViewModel {
     
     
     private let eventStore = EKEventStore()
+    var calendar: EKCalendar
 
     init(competition: Competition = Competition.allCases[0]) {
         self.competition = competition
         self.resourcePath = "competitions/\(competition.id)/matches"
         self.apiClient = ApiClient(session: URLSession.shared, resourcePath: resourcePath)
+        self.calendar = EKCalendar(for: .event, eventStore: eventStore)
+        setupCalendar()
+        
         requestAccess { (authorized) in
             if authorized {
                 print("Authorized")
             }
+        }
+    }
+    
+    fileprivate func setupCalendar() {
+        let defaults = UserDefaults.standard
+        
+        if let calenderIdentifier = defaults.object(forKey: calendarIdentifierKey) as? String,
+           let calendar = eventStore.calendar(withIdentifier: calenderIdentifier) {
+            self.calendar = calendar
+            return
+        }
+        
+        let sourcesInEventStore = eventStore.sources
+        let localSource = sourcesInEventStore.filter { (source: EKSource) -> Bool in
+            source.sourceType.rawValue == EKSourceType.local.rawValue
+        }.first
+        
+        if let localSource = localSource {
+            self.calendar.source = localSource
+        }
+        
+        do {
+            calendar.title = Bundle.main.displayName ?? calendarBackupName
+            try eventStore.saveCalendar(calendar, commit: true)
+            defaults.set(calendar.calendarIdentifier, forKey: calendarIdentifierKey)
+        } catch {
+            print("Failed calendar setup")
         }
     }
     
@@ -135,7 +166,7 @@ extension FixturesViewModel {
             ekEvent.title = createMatchEventTitle(match: match)
             ekEvent.startDate = match.utcDate
             ekEvent.endDate = createMatchEventEndDate(match: match)
-            ekEvent.calendar = self.eventStore.defaultCalendarForNewEvents
+            ekEvent.calendar = self.calendar
             ekEvent.notes = self.competition.rawValue
             
             do {
@@ -149,7 +180,7 @@ extension FixturesViewModel {
     }
     
     private func eventAlreadyExists(event: EKEvent) -> Bool {
-        let predicate = eventStore.predicateForEvents(withStart: event.startDate, end: event.endDate, calendars: nil)
+        let predicate = eventStore.predicateForEvents(withStart: event.startDate, end: event.endDate, calendars: [calendar])
         let savedEvents = eventStore.events(matching: predicate)
         
         let eventAlreadyExists = savedEvents.contains { (savedEvent) -> Bool in
@@ -160,7 +191,7 @@ extension FixturesViewModel {
     }
     
     private func eventAlreadyExists(event: Match) -> Bool {
-        let predicate = eventStore.predicateForEvents(withStart: event.utcDate, end: createMatchEventEndDate(match: event), calendars: nil)
+        let predicate = eventStore.predicateForEvents(withStart: event.utcDate, end: createMatchEventEndDate(match: event), calendars: [calendar])
         let savedEvents = eventStore.events(matching: predicate)
         
         let eventAlreadyExists = savedEvents.contains { (savedEvent) -> Bool in

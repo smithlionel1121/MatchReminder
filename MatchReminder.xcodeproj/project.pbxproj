@@ -30,6 +30,7 @@
 		70B6EB6426C6D396004B8A2B /* ResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB6326C6D396004B8A2B /* ResultCollectionViewCell.swift */; };
 		70B6EB6626C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB6526C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift */; };
 		70B6EB6A26C84E8C004B8A2B /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB6926C84E8C004B8A2B /* Team.swift */; };
+		70B6EB6C26C959F9004B8A2B /* Bundle+DisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B6EB6B26C959F9004B8A2B /* Bundle+DisplayName.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +46,7 @@
 /* Begin PBXFileReference section */
 		70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		70440FF726C00B560071BC44 /* URLSession+NetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+NetworkSession.swift"; sourceTree = "<group>"; };
-		70AC7ECE26AAEB3C00E74AC8 /* MatchReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		70AC7ECE26AAEB3C00E74AC8 /* Match Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Match Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70AC7ED326AAEB3C00E74AC8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		70AC7ED526AAEB3C00E74AC8 /* FixtureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +71,7 @@
 		70B6EB6326C6D396004B8A2B /* ResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCollectionViewCell.swift; sourceTree = "<group>"; };
 		70B6EB6526C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureBaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		70B6EB6926C84E8C004B8A2B /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		70B6EB6B26C959F9004B8A2B /* Bundle+DisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+DisplayName.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				70440FF726C00B560071BC44 /* URLSession+NetworkSession.swift */,
+				70B6EB6B26C959F9004B8A2B /* Bundle+DisplayName.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -111,7 +114,7 @@
 		70AC7ECF26AAEB3C00E74AC8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				70AC7ECE26AAEB3C00E74AC8 /* MatchReminder.app */,
+				70AC7ECE26AAEB3C00E74AC8 /* Match Reminder.app */,
 				70AC7EE426AAEB3E00E74AC8 /* MatchReminderTests.xctest */,
 			);
 			name = Products;
@@ -190,9 +193,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		70AC7ECD26AAEB3C00E74AC8 /* MatchReminder */ = {
+		70AC7ECD26AAEB3C00E74AC8 /* Match Reminder */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 70AC7EF826AAEB3E00E74AC8 /* Build configuration list for PBXNativeTarget "MatchReminder" */;
+			buildConfigurationList = 70AC7EF826AAEB3E00E74AC8 /* Build configuration list for PBXNativeTarget "Match Reminder" */;
 			buildPhases = (
 				70AC7ECA26AAEB3C00E74AC8 /* Sources */,
 				70AC7ECB26AAEB3C00E74AC8 /* Frameworks */,
@@ -202,9 +205,9 @@
 			);
 			dependencies = (
 			);
-			name = MatchReminder;
+			name = "Match Reminder";
 			productName = MatchReminder;
-			productReference = 70AC7ECE26AAEB3C00E74AC8 /* MatchReminder.app */;
+			productReference = 70AC7ECE26AAEB3C00E74AC8 /* Match Reminder.app */;
 			productType = "com.apple.product-type.application";
 		};
 		70AC7EE326AAEB3E00E74AC8 /* MatchReminderTests */ = {
@@ -256,7 +259,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				70AC7ECD26AAEB3C00E74AC8 /* MatchReminder */,
+				70AC7ECD26AAEB3C00E74AC8 /* Match Reminder */,
 				70AC7EE326AAEB3E00E74AC8 /* MatchReminderTests */,
 			);
 		};
@@ -300,6 +303,7 @@
 				70B6EB6626C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift in Sources */,
 				70AC7F0E26B2D87100E74AC8 /* Match.swift in Sources */,
 				70B6EB5926C14D75004B8A2B /* CompetitionSelectionView.swift in Sources */,
+				70B6EB6C26C959F9004B8A2B /* Bundle+DisplayName.swift in Sources */,
 				70AC7F1C26B4561300E74AC8 /* FixtureCollectionViewCell.swift in Sources */,
 				70AC7ED426AAEB3C00E74AC8 /* SceneDelegate.swift in Sources */,
 				70AC7F0F26B2D87800E74AC8 /* ApiClient.swift in Sources */,
@@ -322,7 +326,7 @@
 /* Begin PBXTargetDependency section */
 		70AC7EE626AAEB3E00E74AC8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 70AC7ECD26AAEB3C00E74AC8 /* MatchReminder */;
+			target = 70AC7ECD26AAEB3C00E74AC8 /* Match Reminder */;
 			targetProxy = 70AC7EE526AAEB3E00E74AC8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -549,7 +553,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		70AC7EF826AAEB3E00E74AC8 /* Build configuration list for PBXNativeTarget "MatchReminder" */ = {
+		70AC7EF826AAEB3E00E74AC8 /* Build configuration list for PBXNativeTarget "Match Reminder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				70AC7EF926AAEB3E00E74AC8 /* Debug */,
