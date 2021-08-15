@@ -99,6 +99,14 @@ extension FixturesViewModel {
         }
     }
     
+    private func createMatchEventTitle(match: Match) -> String {
+        return "\(match.homeTeam.name) v \(match.awayTeam.name)"
+    }
+    
+    private func createMatchEventEndDate(match: Match) -> Date {
+        return Calendar.current.date(byAdding: .hour, value: 2, to: match.utcDate) ?? match.utcDate
+    }
+
     private func getMatchEvent(with id: Int, completion: (EKEvent?) -> Void) {
         guard isAvailable else {
             completion(nil)
@@ -118,11 +126,15 @@ extension FixturesViewModel {
             return
         }
         
+        guard !eventAlreadyExists(event: match) else {
+            return
+        }
+        
         getMatchEvent(with: match.id) { (ekEvent) in
             let ekEvent = ekEvent ?? EKEvent(eventStore: self.eventStore)
-            ekEvent.title = "\(match.homeTeam.name) v \(match.awayTeam.name)"
+            ekEvent.title = createMatchEventTitle(match: match)
             ekEvent.startDate = match.utcDate
-            ekEvent.endDate = Calendar.current.date(byAdding: .hour, value: 2, to: match.utcDate)
+            ekEvent.endDate = createMatchEventEndDate(match: match)
             ekEvent.calendar = self.eventStore.defaultCalendarForNewEvents
             ekEvent.notes = self.competition.rawValue
             
@@ -136,4 +148,25 @@ extension FixturesViewModel {
         
     }
     
+    private func eventAlreadyExists(event: EKEvent) -> Bool {
+        let predicate = eventStore.predicateForEvents(withStart: event.startDate, end: event.endDate, calendars: nil)
+        let savedEvents = eventStore.events(matching: predicate)
+        
+        let eventAlreadyExists = savedEvents.contains { (savedEvent) -> Bool in
+            return savedEvent.title == event.title
+        }
+        
+        return eventAlreadyExists
+    }
+    
+    private func eventAlreadyExists(event: Match) -> Bool {
+        let predicate = eventStore.predicateForEvents(withStart: event.utcDate, end: createMatchEventEndDate(match: event), calendars: nil)
+        let savedEvents = eventStore.events(matching: predicate)
+        
+        let eventAlreadyExists = savedEvents.contains { (savedEvent) -> Bool in
+            return savedEvent.title == createMatchEventTitle(match: event)
+        }
+        
+        return eventAlreadyExists
+    }
 }
