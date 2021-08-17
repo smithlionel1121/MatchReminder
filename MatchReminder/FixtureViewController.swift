@@ -98,7 +98,7 @@ class FixtureViewController: UIViewController {
                     guard let self = self else { return }
                     self.fixturesViewModel?.matches = matchResponse.matches
                     self.fixturesViewModel?.arrangeDates()
-                    
+                    self.collectionView.setContentOffset(.zero, animated: true)
                     self.collectionView?.reloadData()
                 }
             case .failure(let error):
@@ -114,6 +114,7 @@ class FixtureViewController: UIViewController {
         let index = sender.selectedSegmentIndex
         fixturesViewModel.filter  = FixturesViewModel.Filter.allCases[index]
         fixturesViewModel.arrangeDates()
+        collectionView.setContentOffset(.zero, animated: true)
         collectionView.reloadData()
     }
 }
@@ -181,7 +182,6 @@ extension FixtureViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         competitionSelectionView.selectedCompetition = Competition.allCases[row]
-        loadFixtures()
     }
 }
 
