@@ -63,7 +63,7 @@ class FixturesViewModel {
         let defaults = UserDefaults.standard
         
         if let calenderIdentifier = defaults.object(forKey: calendarIdentifierKey) as? String,
-           let calendar = eventStore.calendar(withIdentifier: calenderIdentifier) {
+           let calendar = eventStore.calendars(for: .event).first(where: { $0.calendarIdentifier == calenderIdentifier}) {
             self.calendar = calendar
             return
         }
@@ -137,20 +137,6 @@ extension FixturesViewModel {
     private func createMatchEventEndDate(match: Match) -> Date {
         return Calendar.current.date(byAdding: .hour, value: 2, to: match.utcDate) ?? match.utcDate
     }
-
-    private func getMatchEvent(with id: Int, completion: (EKEvent?) -> Void) {
-        guard isAvailable else {
-            completion(nil)
-            return
-        }
-        
-        guard let calendarItem = eventStore.calendarItem(withIdentifier: "\(id)"), let ekEvent = calendarItem as? EKEvent else {
-            completion(nil)
-            return
-        }
-        
-        completion(ekEvent)
-    }
     
     func saveMatchEvent(_ match: Match, completion: (String?) -> Void) {
         guard  isAvailable else {
@@ -160,23 +146,19 @@ extension FixturesViewModel {
         guard !eventAlreadyExists(event: match) else {
             return
         }
+        let ekEvent = EKEvent(eventStore: self.eventStore)
+        ekEvent.title = createMatchEventTitle(match: match)
+        ekEvent.startDate = match.utcDate
+        ekEvent.endDate = createMatchEventEndDate(match: match)
+        ekEvent.calendar = self.calendar
+        ekEvent.notes = self.competition.rawValue
         
-        getMatchEvent(with: match.id) { (ekEvent) in
-            let ekEvent = ekEvent ?? EKEvent(eventStore: self.eventStore)
-            ekEvent.title = createMatchEventTitle(match: match)
-            ekEvent.startDate = match.utcDate
-            ekEvent.endDate = createMatchEventEndDate(match: match)
-            ekEvent.calendar = self.calendar
-            ekEvent.notes = self.competition.rawValue
-            
-            do {
-                try self.eventStore.save(ekEvent, span: .thisEvent)
-                completion(ekEvent.eventIdentifier)
-            } catch {
-                completion(nil)
-            }
+        do {
+            try self.eventStore.save(ekEvent, span: .thisEvent)
+            completion(ekEvent.eventIdentifier)
+        } catch {
+            completion(nil)
         }
-        
     }
     
     private func eventAlreadyExists(event: EKEvent) -> Bool {
@@ -190,7 +172,7 @@ extension FixturesViewModel {
         return eventAlreadyExists
     }
     
-    private func eventAlreadyExists(event: Match) -> Bool {
+    func eventAlreadyExists(event: Match) -> Bool {
         let predicate = eventStore.predicateForEvents(withStart: event.utcDate, end: createMatchEventEndDate(match: event), calendars: [calendar])
         let savedEvents = eventStore.events(matching: predicate)
         
