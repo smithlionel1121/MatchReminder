@@ -127,17 +127,43 @@ extension FixtureViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return fixturesViewModel?.dateGroupedMatches?[section].value.count ?? 0
     }
-
+    
+    @objc
+    func toggleMatchEvent(_ sender: UIButton) {
+        let convertedPoint: CGPoint = sender.convert(CGPoint.zero, to: self.collectionView)
+        let indexPath = self.collectionView.indexPathForItem(at: convertedPoint)
+        
+        guard let indexPath = indexPath else { return }
+        let cell = self.collectionView.cellForItem(at: indexPath) as! FixtureCollectionViewCell
+        
+        if let eventExists = cell.eventExists, eventExists {
+            // TODO: Delete event
+            cell.eventExists = false
+        } else if let match = cell.match {
+            fixturesViewModel?.saveMatchEvent(match, completion: { _ in })
+            cell.eventExists = true
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell: FixtureBaseCollectionViewCell
+        let match = fixturesViewModel?.dateGroupedMatches?[indexPath.section].value[indexPath.row]
 
         if fixturesViewModel?.filter == .results {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
         } else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: FixtureCollectionViewCell.identifier, for: indexPath) as! FixtureCollectionViewCell
-        }
+            let fixtureCell = collectionView.dequeueReusableCell(withReuseIdentifier: FixtureCollectionViewCell.identifier, for: indexPath) as! FixtureCollectionViewCell
+            fixtureCell.starButton.tag = indexPath.row
+            fixtureCell.starButton.addTarget(self, action: #selector(toggleMatchEvent(_:)), for: .touchUpInside)
 
-        cell.configureCell(match: fixturesViewModel?.dateGroupedMatches?[indexPath.section].value[indexPath.row])
+            if let matchEvent = match {
+                fixtureCell.eventExists = fixturesViewModel?.eventAlreadyExists(event: matchEvent)
+            }
+            cell = fixtureCell
+        }
+        
+
+        cell.configureCell(match: match)
         return cell
     }
     

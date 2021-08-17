@@ -27,6 +27,20 @@ class FixtureCollectionViewCell: FixtureBaseCollectionViewCell {
         return label
     }()
     
+    var eventExists: Bool? {
+        didSet {
+            guard let eventExists = eventExists else { return }                
+            let systemName = eventExists ? "star.fill" : "star"
+            starButton.setImage(UIImage(systemName: systemName), for: .normal)
+        }
+    }
+    
+    var starButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        return button
+    }()
+    
     override func configureContent() {
         contentView.addSubview(fixtureStackView)
         configureFixtureStackView()
