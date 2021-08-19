@@ -138,7 +138,7 @@ extension FixturesViewModel {
         return Calendar.current.date(byAdding: .hour, value: 2, to: match.utcDate) ?? match.utcDate
     }
     
-    func saveMatchEvent(_ match: Match, completion: (String?) -> Void) {
+    func saveMatchEvent(_ match: Match, completion: (Result<String?, Error>) -> Void) {
         guard  eventAlreadyExists(event: match) == false else {
             return
         }
@@ -152,9 +152,9 @@ extension FixturesViewModel {
         
         do {
             try self.eventStore.save(ekEvent, span: .thisEvent)
-            completion(ekEvent.eventIdentifier)
-        } catch {
-            completion(nil)
+            completion(.success(ekEvent.eventIdentifier))
+        } catch let error {
+            completion(.failure(error))
         }
     }
     

@@ -151,8 +151,14 @@ extension FixtureViewController: UICollectionViewDataSource {
                 }
             })
         } else {
-            fixturesViewModel?.saveMatchEvent(match, completion: { _ in })
-            cell.eventExists = true
+            fixturesViewModel?.saveMatchEvent(match, completion: { (result: Result<String?, Error>) in
+                switch result {
+                case .success(_):
+                    cell.eventExists = true
+                case .failure(let error):
+                    print("error \(error)")
+                }
+            })
         }
     }
     
