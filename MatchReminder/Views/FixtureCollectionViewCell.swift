@@ -11,6 +11,7 @@ class FixtureCollectionViewCell: FixtureBaseCollectionViewCell {
     
     static let identifier = fixtureCell
     
+    private var contentStackView = UIStackView()
     private var fixtureStackView = UIStackView()
     private var matchStackView = UIStackView()
 
@@ -29,7 +30,8 @@ class FixtureCollectionViewCell: FixtureBaseCollectionViewCell {
     
     var eventExists: Bool? {
         didSet {
-            guard let eventExists = eventExists else { return }                
+            guard let eventExists = eventExists else { return }
+            starButton.isHidden = false
             let systemName = eventExists ? "star.fill" : "star"
             starButton.setImage(UIImage(systemName: systemName), for: .normal)
         }
@@ -37,13 +39,18 @@ class FixtureCollectionViewCell: FixtureBaseCollectionViewCell {
     
     var starButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.isHidden = true
         return button
     }()
     
+    var starView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    
     override func configureContent() {
-        contentView.addSubview(fixtureStackView)
-        configureFixtureStackView()
+        contentStackView.addArrangedSubview(fixtureStackView)
+        contentStackView.addArrangedSubview(starView)
+        
+        contentView.addSubview(contentStackView)
+        configureContentStackView()
     }
     
     override func updateMatch() {
@@ -52,9 +59,23 @@ class FixtureCollectionViewCell: FixtureBaseCollectionViewCell {
         }
     }
     
+    func configureContentStackView() {
+        contentStackView.axis = .horizontal
+        
+        setContentStackViewConstraints()
+        configureFixtureStackView()
+        configureStarView()
+    }
+    
+    func configureStarView() {
+        starView.addSubview(starButton)
+        setStarViewConstraints()
+        setStarButtonConstraints()
+    }
+    
     func configureFixtureStackView() {
         fixtureStackView.axis = .vertical
-        fixtureStackView.spacing = 10
+        fixtureStackView.distribution = .fillEqually
         
         fixtureStackView.addArrangedSubview(matchStackView)
         fixtureStackView.addArrangedSubview(dateLabel)
@@ -76,6 +97,31 @@ class FixtureCollectionViewCell: FixtureBaseCollectionViewCell {
         matchStackView.addArrangedSubview(awayLabel)
         
         setVersusLabelConstraints()
+    }
+    
+    func setContentStackViewConstraints() {
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+        ])
+    }
+    
+    func setStarViewConstraints() {
+        starView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            starView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            starView.leadingAnchor.constraint(equalTo: fixtureStackView.trailingAnchor),
+            starView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -5),
+            starView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
+        ])
+    }
+    
+    func setStarButtonConstraints() {
+        starButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            starButton.centerYAnchor.constraint(equalTo: starView.safeAreaLayoutGuide.centerYAnchor),
+            starButton.centerXAnchor.constraint(equalTo: starView.safeAreaLayoutGuide.centerXAnchor)
+        ])
     }
     
     func setFixtureStackViewConstraints() {

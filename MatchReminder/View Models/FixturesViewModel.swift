@@ -143,7 +143,7 @@ extension FixturesViewModel {
             return
         }
         
-        guard !eventAlreadyExists(event: match) else {
+        guard eventAlreadyExists(event: match) == false else {
             return
         }
         let ekEvent = EKEvent(eventStore: self.eventStore)
@@ -172,7 +172,11 @@ extension FixturesViewModel {
         return eventAlreadyExists
     }
     
-    func eventAlreadyExists(event: Match) -> Bool {
+    func eventAlreadyExists(event: Match) -> Bool? {
+        guard isAvailable else {
+            return nil
+        }
+        
         let predicate = eventStore.predicateForEvents(withStart: event.utcDate, end: createMatchEventEndDate(match: event), calendars: [calendar])
         let savedEvents = eventStore.events(matching: predicate)
         

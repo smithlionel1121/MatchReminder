@@ -136,7 +136,12 @@ extension FixtureViewController: UICollectionViewDataSource {
         guard let indexPath = indexPath else { return }
         let cell = self.collectionView.cellForItem(at: indexPath) as! FixtureCollectionViewCell
         
-        if let eventExists = cell.eventExists, eventExists {
+        guard let eventExists = cell.eventExists else {
+            cell.starButton.isHidden = true
+            return
+        }
+        
+        if eventExists {
             // TODO: Delete event
             cell.eventExists = false
         } else if let match = cell.match {
@@ -191,7 +196,7 @@ extension FixtureViewController: UICollectionViewDelegateFlowLayout {
         let spaceBetweenCells = layout.minimumLineSpacing * (columns - 1)
         let adjustedWidth = collectionViewWidth - spaceBetweenCells
         let width: CGFloat = floor(adjustedWidth / columns)
-        let height: CGFloat = 100
+        let height: CGFloat = 125
         return CGSize(width: width, height: height)
     }
     
