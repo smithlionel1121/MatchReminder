@@ -139,13 +139,10 @@ extension FixturesViewModel {
     }
     
     func saveMatchEvent(_ match: Match, completion: (String?) -> Void) {
-        guard  isAvailable else {
+        guard  eventAlreadyExists(event: match) == false else {
             return
         }
         
-        guard eventAlreadyExists(event: match) == false else {
-            return
-        }
         let ekEvent = EKEvent(eventStore: self.eventStore)
         ekEvent.title = createMatchEventTitle(match: match)
         ekEvent.startDate = match.utcDate
@@ -158,6 +155,21 @@ extension FixturesViewModel {
             completion(ekEvent.eventIdentifier)
         } catch {
             completion(nil)
+        }
+    }
+    
+    func deleteMatchEvent(_ match: Match, completion: (String?) -> Void) {
+        let predicate = eventStore.predicateForEvents(withStart: match.utcDate, end: createMatchEventEndDate(match: match), calendars: [calendar])
+        let savedEvents = eventStore.events(matching: predicate)
+        let ekEvent = savedEvents.first { $0.title == createMatchEventTitle(match: match) }
+        
+        if let ekEvent = ekEvent {
+            do {
+                try eventStore.remove(ekEvent, span: .thisEvent)
+                completion(nil)
+            } catch {
+                completion(nil)
+            }
         }
     }
     

@@ -136,15 +136,15 @@ extension FixtureViewController: UICollectionViewDataSource {
         guard let indexPath = indexPath else { return }
         let cell = self.collectionView.cellForItem(at: indexPath) as! FixtureCollectionViewCell
         
-        guard let eventExists = cell.eventExists else {
+        guard let eventExists = cell.eventExists, let match = cell.match else {
             cell.starButton.isHidden = true
             return
         }
         
         if eventExists {
-            // TODO: Delete event
+            fixturesViewModel?.deleteMatchEvent(match, completion: { _ in })
             cell.eventExists = false
-        } else if let match = cell.match {
+        } else {
             fixturesViewModel?.saveMatchEvent(match, completion: { _ in })
             cell.eventExists = true
         }
