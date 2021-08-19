@@ -158,7 +158,7 @@ extension FixturesViewModel {
         }
     }
     
-    func deleteMatchEvent(_ match: Match, completion: (String?) -> Void) {
+    func deleteMatchEvent(_ match: Match, completion: (Result<Void, Error>) -> Void) {
         let predicate = eventStore.predicateForEvents(withStart: match.utcDate, end: createMatchEventEndDate(match: match), calendars: [calendar])
         let savedEvents = eventStore.events(matching: predicate)
         let ekEvent = savedEvents.first { $0.title == createMatchEventTitle(match: match) }
@@ -166,9 +166,9 @@ extension FixturesViewModel {
         if let ekEvent = ekEvent {
             do {
                 try eventStore.remove(ekEvent, span: .thisEvent)
-                completion(nil)
-            } catch {
-                completion(nil)
+                completion(.success(Void()))
+            } catch let error {
+                completion(.failure(error))
             }
         }
     }
