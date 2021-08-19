@@ -50,11 +50,11 @@ class FixturesViewModel {
         self.resourcePath = "competitions/\(competition.id)/matches"
         self.apiClient = ApiClient(session: URLSession.shared, resourcePath: resourcePath)
         self.calendar = EKCalendar(for: .event, eventStore: eventStore)
-        setupCalendar()
         
         requestAccess { (authorized) in
             if authorized {
                 print("Authorized")
+                self.setupCalendar()
             }
         }
     }
@@ -69,11 +69,20 @@ class FixturesViewModel {
         }
         
         let sourcesInEventStore = eventStore.sources
-        let localSource = sourcesInEventStore.filter { (source: EKSource) -> Bool in
-            source.sourceType.rawValue == EKSourceType.local.rawValue
+        
+        var calSource: EKSource?
+        
+        calSource = sourcesInEventStore.filter { (source: EKSource) -> Bool in
+            source.sourceType == EKSourceType.calDAV
         }.first
         
-        if let localSource = localSource {
+        if calSource == nil {
+            calSource = sourcesInEventStore.filter { (source: EKSource) -> Bool in
+                source.sourceType == EKSourceType.local
+            }.first
+        }
+
+        if let localSource = calSource {
             self.calendar.source = localSource
         }
         
@@ -81,8 +90,9 @@ class FixturesViewModel {
             calendar.title = Bundle.main.displayName ?? calendarBackupName
             try eventStore.saveCalendar(calendar, commit: true)
             defaults.set(calendar.calendarIdentifier, forKey: calendarIdentifierKey)
-        } catch {
+        } catch let error {
             print("Failed calendar setup")
+            print(error)
         }
     }
     
