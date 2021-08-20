@@ -68,6 +68,7 @@ class CompetitionSelectionView: UIView {
         competitionField.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 10
         competitionField.widthAnchor.constraint(greaterThanOrEqualTo: stackView.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5).isActive = true
+        stackView.distribution = .fillProportionally
         
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         toolbar.barStyle = .default
