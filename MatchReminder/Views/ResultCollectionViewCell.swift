@@ -45,6 +45,7 @@ class ResultCollectionViewCell: FixtureBaseCollectionViewCell {
     
     func configureMatchStackView() {
         matchStackView.axis = .vertical
+        matchStackView.distribution = .fillEqually
         matchStackView.spacing = 10
         
         setMatchStackViewConstraints()

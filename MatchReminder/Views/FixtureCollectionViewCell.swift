@@ -32,13 +32,14 @@ class FixtureCollectionViewCell: FixtureBaseCollectionViewCell {
         didSet {
             guard let eventExists = eventExists else { return }
             starButton.isHidden = false
-            let systemName = eventExists ? "star.fill" : "star"
-            starButton.setImage(UIImage(systemName: systemName), for: .normal)
+            starButton.setImage(UIImage(systemName: eventExists ? "star.fill" : "star"), for: .normal)
+            starButton.tintColor = eventExists ? .systemYellow : .black
         }
     }
     
     var starButton: UIButton = {
         let button = UIButton()
+        button.tintColor = .black
         button.isHidden = true
         return button
     }()
