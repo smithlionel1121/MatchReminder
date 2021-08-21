@@ -159,6 +159,7 @@ extension FixturesViewModel {
         ekEvent.endDate = createMatchEventEndDate(match: match)
         ekEvent.calendar = self.calendar
         ekEvent.notes = self.competition.rawValue
+        ekEvent.alarms = [EKAlarm(relativeOffset: -60 * 15)]
         
         do {
             try self.eventStore.save(ekEvent, span: .thisEvent)
