@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		70440FF526BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */; };
 		70440FF826C00B560071BC44 /* URLSession+NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70440FF726C00B560071BC44 /* URLSession+NetworkSession.swift */; };
+		708FFA9526CFC50400795ED3 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708FFA9426CFC50400795ED3 /* TabBarViewController.swift */; };
 		70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */; };
 		70AC7ED426AAEB3C00E74AC8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED326AAEB3C00E74AC8 /* SceneDelegate.swift */; };
 		70AC7ED626AAEB3C00E74AC8 /* FixtureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED526AAEB3C00E74AC8 /* FixtureViewController.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixtureHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		70440FF726C00B560071BC44 /* URLSession+NetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+NetworkSession.swift"; sourceTree = "<group>"; };
+		708FFA9426CFC50400795ED3 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		70AC7ECE26AAEB3C00E74AC8 /* Match Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Match Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70AC7ED326AAEB3C00E74AC8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				70AC7F1526B4424600E74AC8 /* Views */,
 				70AC7F0126AB098800E74AC8 /* Models */,
 				70AC7ED526AAEB3C00E74AC8 /* FixtureViewController.swift */,
+				708FFA9426CFC50400795ED3 /* TabBarViewController.swift */,
 				70AC7F1626B4473D00E74AC8 /* View Models */,
 				70AC7EDA26AAEB3E00E74AC8 /* Assets.xcassets */,
 				70440FF626C00B220071BC44 /* Extensions */,
@@ -303,6 +306,7 @@
 				70B6EB6626C6EC1D004B8A2B /* FixtureBaseCollectionViewCell.swift in Sources */,
 				70AC7F0E26B2D87100E74AC8 /* Match.swift in Sources */,
 				70B6EB5926C14D75004B8A2B /* CompetitionSelectionView.swift in Sources */,
+				708FFA9526CFC50400795ED3 /* TabBarViewController.swift in Sources */,
 				70B6EB6C26C959F9004B8A2B /* Bundle+DisplayName.swift in Sources */,
 				70AC7F1C26B4561300E74AC8 /* FixtureCollectionViewCell.swift in Sources */,
 				70AC7ED426AAEB3C00E74AC8 /* SceneDelegate.swift in Sources */,
