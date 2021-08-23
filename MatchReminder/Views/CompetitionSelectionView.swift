@@ -9,7 +9,7 @@ import UIKit
 
 class CompetitionSelectionView: UIView {
     
-    var fixturesViewModel: FixturesViewModel?
+    var competitionViewModel: CompetitionViewModel?
     var selectedCompetition: Competition?
     var completion: (() -> Void)?
 
@@ -38,13 +38,13 @@ class CompetitionSelectionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(pickerView: UIPickerView, fixturesViewModel: FixturesViewModel?, completion: @escaping () -> Void) {
-        self.fixturesViewModel = fixturesViewModel
+    func configure(pickerView: UIPickerView, competitionViewModel: CompetitionViewModel?, completion: @escaping () -> Void) {
+        self.competitionViewModel = competitionViewModel
         self.completion = completion
         
         self.addSubview(stackView)
         competitionField.inputView = pickerView
-        if let competition = fixturesViewModel?.competition {
+        if let competition = competitionViewModel?.competition {
             competitionField.text = "\(competition.rawValue)"
         }
         stackView.addArrangedSubview(competitionLabel)
@@ -85,7 +85,7 @@ class CompetitionSelectionView: UIView {
     @objc
     func doneButtonTapped() {
         if let competition = selectedCompetition {
-            fixturesViewModel?.competition = competition
+            competitionViewModel?.competition = competition
             competitionField.text = "\(competition.rawValue)"
         }
         competitionField.resignFirstResponder()

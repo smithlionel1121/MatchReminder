@@ -1,5 +1,5 @@
 //
-//  FixturesViewModel.swift
+//  CompetitionViewModel.swift
 //  MatchReminder
 //
 //  Created by Lionel Smith on 30/07/2021.
@@ -8,7 +8,7 @@
 import Foundation
 import EventKit
 
-class FixturesViewModel {
+class CompetitionViewModel {
     enum Filter: String, CaseIterable {
         case fixtures = "Fixtures"
         case results = "Results"
@@ -22,12 +22,24 @@ class FixturesViewModel {
             }
         }
     }
+
+    enum CompetitionData: String, CaseIterable {
+        case matches = "Matches"
+        case standings = "Standings"
+    }
     
     var competition: Competition {
         didSet {
-            resourcePath = "competitions/\(competition.id)/matches"
+            resourcePath = "competitions/\(competition.id)/\(competitionData)"
         }
     }
+    
+    var competitionData: CompetitionData {
+        didSet {
+            resourcePath = "competitions/\(competition.id)/\(competitionData)"
+        }
+    }
+    
     var resourcePath: String {
         didSet {
             self.apiClient.path = resourcePath
@@ -45,9 +57,10 @@ class FixturesViewModel {
     private let eventStore = EKEventStore()
     var calendar: EKCalendar
 
-    init(competition: Competition = Competition.allCases[0]) {
+    init(competition: Competition = Competition.allCases[0], competitionData: CompetitionData = CompetitionData.allCases[0]) {
         self.competition = competition
-        self.resourcePath = "competitions/\(competition.id)/matches"
+        self.competitionData = competitionData
+        self.resourcePath = "competitions/\(competition.id)/\(competitionData)"
         self.apiClient = ApiClient(session: URLSession.shared, resourcePath: resourcePath)
         self.calendar = EKCalendar(for: .event, eventStore: eventStore)
         
@@ -100,6 +113,12 @@ class FixturesViewModel {
         apiClient.fetchResource(completion: completion)
     }
     
+    //
+    func loadStandings(completion: @escaping (Result<StandingsResponse, ApiError>) -> Void) {
+        apiClient.fetchResource(completion: completion)
+    }
+    //
+    
     func arrangeDates() {
         filterDates()
         guard let matches = self.filteredMatches else { return }
@@ -123,7 +142,7 @@ class FixturesViewModel {
     }
 }
 
-extension FixturesViewModel {
+extension CompetitionViewModel {
     private var isAvailable: Bool {
         EKEventStore.authorizationStatus(for: .event) == .authorized
     }

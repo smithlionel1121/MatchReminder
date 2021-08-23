@@ -13,18 +13,18 @@ class FixtureViewController: UIViewController {
     private var competitionSelectionView: CompetitionSelectionView!
     private var competitionPicker: UIPickerView!
     
-    var fixturesViewModel: FixturesViewModel?
+    var competitionViewModel: CompetitionViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        fixturesViewModel = FixturesViewModel()
+        competitionViewModel = CompetitionViewModel()
         loadFixtures()
         
-        let items = FixturesViewModel.Filter.allCases.map { $0.rawValue }
+        let items = CompetitionViewModel.Filter.allCases.map { $0.rawValue }
         let filterSegmentedControl = UISegmentedControl(items: items)
-        filterSegmentedControl.selectedSegmentIndex = FixturesViewModel.Filter.allCases.firstIndex {$0 == fixturesViewModel?.filter } ?? 0
+        filterSegmentedControl.selectedSegmentIndex = CompetitionViewModel.Filter.allCases.firstIndex {$0 == competitionViewModel?.filter } ?? 0
         filterSegmentedControl.sizeToFit()
         filterSegmentedControl.tintColor = .red
         filterSegmentedControl.addTarget(self, action: #selector(segmentControlChanged(_:)), for: .valueChanged)
@@ -52,7 +52,7 @@ class FixtureViewController: UIViewController {
         
         view.addSubview(competitionSelectionView)
         view.addSubview(collectionView)
-        competitionSelectionView.configure(pickerView: competitionPicker, fixturesViewModel: fixturesViewModel, completion: loadFixtures)
+        competitionSelectionView.configure(pickerView: competitionPicker, competitionViewModel: competitionViewModel, completion: loadFixtures)
         setUpConstraints()
     }
     
@@ -91,13 +91,13 @@ class FixtureViewController: UIViewController {
     }
     
     func loadFixtures() {
-        fixturesViewModel?.loadFixtures { (result: Result<MatchesResponse, ApiError>) in
+        competitionViewModel?.loadFixtures { (result: Result<MatchesResponse, ApiError>) in
             switch result {
             case .success(let matchResponse):
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.fixturesViewModel?.matches = matchResponse.matches
-                    self.fixturesViewModel?.arrangeDates()
+                    self.competitionViewModel?.matches = matchResponse.matches
+                    self.competitionViewModel?.arrangeDates()
                     self.collectionView.setContentOffset(.zero, animated: true)
                     self.collectionView?.reloadData()
                 }
@@ -110,10 +110,10 @@ class FixtureViewController: UIViewController {
     
     @objc
     func segmentControlChanged(_ sender: UISegmentedControl) {
-        guard let fixturesViewModel = fixturesViewModel else { return }
+        guard let competitionViewModel = competitionViewModel else { return }
         let index = sender.selectedSegmentIndex
-        fixturesViewModel.filter  = FixturesViewModel.Filter.allCases[index]
-        fixturesViewModel.arrangeDates()
+        competitionViewModel.filter  = CompetitionViewModel.Filter.allCases[index]
+        competitionViewModel.arrangeDates()
         collectionView.setContentOffset(.zero, animated: true)
         collectionView.reloadData()
     }
@@ -121,11 +121,11 @@ class FixtureViewController: UIViewController {
 
 extension FixtureViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return fixturesViewModel?.dateGroupedMatches?.count ?? 1
+        return competitionViewModel?.dateGroupedMatches?.count ?? 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return fixturesViewModel?.dateGroupedMatches?[section].value.count ?? 0
+        return competitionViewModel?.dateGroupedMatches?[section].value.count ?? 0
     }
     
     @objc
@@ -142,7 +142,7 @@ extension FixtureViewController: UICollectionViewDataSource {
         }
         
         if eventExists {
-            fixturesViewModel?.deleteMatchEvent(match, completion: { (result: Result<Void, Error>) in
+            competitionViewModel?.deleteMatchEvent(match, completion: { (result: Result<Void, Error>) in
                 switch result {
                 case .success():
                     cell.eventExists = false
@@ -151,7 +151,7 @@ extension FixtureViewController: UICollectionViewDataSource {
                 }
             })
         } else {
-            fixturesViewModel?.saveMatchEvent(match, completion: { (result: Result<String?, Error>) in
+            competitionViewModel?.saveMatchEvent(match, completion: { (result: Result<String?, Error>) in
                 switch result {
                 case .success(_):
                     cell.eventExists = true
@@ -164,9 +164,9 @@ extension FixtureViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell: FixtureBaseCollectionViewCell
-        let match = fixturesViewModel?.dateGroupedMatches?[indexPath.section].value[indexPath.row]
+        let match = competitionViewModel?.dateGroupedMatches?[indexPath.section].value[indexPath.row]
 
-        if fixturesViewModel?.filter == .results {
+        if competitionViewModel?.filter == .results {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
         } else {
             let fixtureCell = collectionView.dequeueReusableCell(withReuseIdentifier: FixtureCollectionViewCell.identifier, for: indexPath) as! FixtureCollectionViewCell
@@ -174,7 +174,7 @@ extension FixtureViewController: UICollectionViewDataSource {
             fixtureCell.starButton.addTarget(self, action: #selector(toggleMatchEvent(_:)), for: .touchUpInside)
 
             if let matchEvent = match {
-                fixtureCell.eventExists = fixturesViewModel?.eventAlreadyExists(event: matchEvent)
+                fixtureCell.eventExists = competitionViewModel?.eventAlreadyExists(event: matchEvent)
             }
             cell = fixtureCell
         }
@@ -186,7 +186,7 @@ extension FixtureViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fixtureHeader, for: indexPath) as! FixtureHeaderCollectionReusableView
-        header.configure(date: fixturesViewModel?.dateGroupedMatches?[indexPath.section].key)
+        header.configure(date: competitionViewModel?.dateGroupedMatches?[indexPath.section].key)
         return header
     }
 }
@@ -195,7 +195,7 @@ extension FixtureViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var columns: CGFloat = 1
         if UIScreen.main.bounds.width >= 800  {
-            if let matches = fixturesViewModel?.dateGroupedMatches {
+            if let matches = competitionViewModel?.dateGroupedMatches {
                 let matchNum = matches[indexPath.section].value.count
                 if matchNum > 1  && !(matchNum % 2 == 1 && indexPath.row == matchNum - 1) {
                 columns = 2
