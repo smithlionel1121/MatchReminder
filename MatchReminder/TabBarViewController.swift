@@ -13,17 +13,13 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         let fixtureViewController = UINavigationController(rootViewController: FixtureViewController())
-        fixtureViewController.title = "Fixtures"
+        fixtureViewController.tabBarItem = UITabBarItem(title: "Fixtures", image: UIImage(systemName: "calendar"), selectedImage: nil)
         
-        self.setViewControllers([fixtureViewController], animated: false)
+        let standingsViewController = UINavigationController(rootViewController: StandingsViewController())
+        standingsViewController.tabBarItem = UITabBarItem(title: "Standings", image: UIImage(systemName: "list.number"), selectedImage: nil)
         
-        guard let items = tabBar.items else { return }
-        
-        let images = ["calendar"]
-        
-        for i in 0..<items.count {
-            items[i].image = UIImage(systemName: images[i])
-        }
+        self.setViewControllers([fixtureViewController, standingsViewController], animated: false)
+
     }
     
 }
