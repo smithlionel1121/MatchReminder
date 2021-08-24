@@ -15,12 +15,17 @@ class StandingsTableViewCell: UITableViewCell {
     
     var standing: Standing? {
         didSet {
+            if let position = standing?.position {
+                positionLabel.text = "\(position)"
+            }
             teamNameLabel.text = standing?.team.name
         }
     }
     
+    var positionLabel = UILabel()
     var teamNameLabel = UILabel()
-        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
 
@@ -35,6 +40,7 @@ class StandingsTableViewCell: UITableViewCell {
     }
     
     func configureContentStackView() {
+        contentStackView.addArrangedSubview(positionLabel)
         contentStackView.addArrangedSubview(teamNameLabel)
         setContentStackViewConstraints()
     }
@@ -42,7 +48,10 @@ class StandingsTableViewCell: UITableViewCell {
     func setContentStackViewConstraints() {
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            contentStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20)
+            contentStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
+            contentStackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
+            contentStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 }

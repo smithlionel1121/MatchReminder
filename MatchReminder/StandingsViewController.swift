@@ -23,6 +23,7 @@ class StandingsViewController: UIViewController {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = 100
         setTableViewConstraints()
         
         tableView.register(StandingsTableViewCell.self, forCellReuseIdentifier: StandingsTableViewCell.identifier)
