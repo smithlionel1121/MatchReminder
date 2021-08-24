@@ -9,50 +9,29 @@ import UIKit
 
 class FixtureViewController: UIViewController {
 
-    private var collectionView: UICollectionView!
-    private var competitionSelectionView: CompetitionSelectionView!
-    private var competitionPicker: UIPickerView!
+    private var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 4
+        layout.minimumInteritemSpacing = 1
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return collectionView
+    }()
+    private var competitionSelectionView = CompetitionSelectionView(frame: .zero)
+    private var competitionPicker = UIPickerView()
     
-    var competitionViewModel: CompetitionViewModel?
+    var competitionViewModel = CompetitionViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        competitionViewModel = CompetitionViewModel()
         loadFixtures()
         
-        let items = CompetitionViewModel.Filter.allCases.map { $0.rawValue }
-        let filterSegmentedControl = UISegmentedControl(items: items)
-        filterSegmentedControl.selectedSegmentIndex = CompetitionViewModel.Filter.allCases.firstIndex {$0 == competitionViewModel?.filter } ?? 0
-        filterSegmentedControl.sizeToFit()
-        filterSegmentedControl.tintColor = .red
-        filterSegmentedControl.addTarget(self, action: #selector(segmentControlChanged(_:)), for: .valueChanged)
-        self.navigationItem.titleView = filterSegmentedControl
+        configureFilterSegmentControlTitleView()
+        configureCollectionView()
+        configureCompetitionView()
         
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 4
-        layout.minimumInteritemSpacing = 1
-
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
-        competitionSelectionView = CompetitionSelectionView(frame: .zero)
-        competitionPicker = UIPickerView()
-                
-        collectionView.register(FixtureCollectionViewCell.self, forCellWithReuseIdentifier: FixtureCollectionViewCell.identifier)
-        collectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
-        collectionView.register(FixtureHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FixtureHeaderCollectionReusableView.identifier)
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-
-        competitionPicker.delegate = self
-        competitionPicker.dataSource = self
-        
-        view.addSubview(competitionSelectionView)
-        view.addSubview(collectionView)
-        competitionSelectionView.configure(pickerView: competitionPicker, competitionViewModel: competitionViewModel, completion: loadFixtures)
         setUpConstraints()
     }
     
@@ -64,6 +43,35 @@ class FixtureViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    private func configureFilterSegmentControlTitleView() {
+        let items = CompetitionViewModel.Filter.allCases.map { $0.rawValue }
+        let filterSegmentedControl = UISegmentedControl(items: items)
+        filterSegmentedControl.selectedSegmentIndex = CompetitionViewModel.Filter.allCases.firstIndex {$0 == competitionViewModel.filter } ?? 0
+        filterSegmentedControl.sizeToFit()
+        filterSegmentedControl.tintColor = .red
+        filterSegmentedControl.addTarget(self, action: #selector(segmentControlChanged(_:)), for: .valueChanged)
+        self.navigationItem.titleView = filterSegmentedControl
+    }
+    
+    private func configureCollectionView() {
+        collectionView.register(FixtureCollectionViewCell.self, forCellWithReuseIdentifier: FixtureCollectionViewCell.identifier)
+        collectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
+        collectionView.register(FixtureHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: FixtureHeaderCollectionReusableView.identifier)
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        view.addSubview(collectionView)
+    }
+    
+    private func configureCompetitionView() {
+        view.addSubview(competitionSelectionView)
+        
+        competitionPicker.delegate = self
+        competitionPicker.dataSource = self
+        
+        competitionSelectionView.configure(pickerView: competitionPicker, competitionViewModel: competitionViewModel, completion: loadFixtures)
     }
     
     func setUpConstraints() {
@@ -91,15 +99,15 @@ class FixtureViewController: UIViewController {
     }
     
     func loadFixtures() {
-        competitionViewModel?.loadFixtures { (result: Result<MatchesResponse, ApiError>) in
+        competitionViewModel.loadFixtures { (result: Result<MatchesResponse, ApiError>) in
             switch result {
             case .success(let matchResponse):
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.competitionViewModel?.matches = matchResponse.matches
-                    self.competitionViewModel?.arrangeDates()
+                    self.competitionViewModel.matches = matchResponse.matches
+                    self.competitionViewModel.arrangeDates()
                     self.collectionView.setContentOffset(.zero, animated: true)
-                    self.collectionView?.reloadData()
+                    self.collectionView.reloadData()
                 }
             case .failure(let error):
                 print("error \(error)")
@@ -110,7 +118,6 @@ class FixtureViewController: UIViewController {
     
     @objc
     func segmentControlChanged(_ sender: UISegmentedControl) {
-        guard let competitionViewModel = competitionViewModel else { return }
         let index = sender.selectedSegmentIndex
         competitionViewModel.filter  = CompetitionViewModel.Filter.allCases[index]
         competitionViewModel.arrangeDates()
@@ -121,11 +128,11 @@ class FixtureViewController: UIViewController {
 
 extension FixtureViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return competitionViewModel?.dateGroupedMatches?.count ?? 1
+        return competitionViewModel.dateGroupedMatches?.count ?? 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return competitionViewModel?.dateGroupedMatches?[section].value.count ?? 0
+        return competitionViewModel.dateGroupedMatches?[section].value.count ?? 0
     }
     
     @objc
@@ -142,7 +149,7 @@ extension FixtureViewController: UICollectionViewDataSource {
         }
         
         if eventExists {
-            competitionViewModel?.deleteMatchEvent(match, completion: { (result: Result<Void, Error>) in
+            competitionViewModel.deleteMatchEvent(match, completion: { (result: Result<Void, Error>) in
                 switch result {
                 case .success():
                     cell.eventExists = false
@@ -151,7 +158,7 @@ extension FixtureViewController: UICollectionViewDataSource {
                 }
             })
         } else {
-            competitionViewModel?.saveMatchEvent(match, completion: { (result: Result<String?, Error>) in
+            competitionViewModel.saveMatchEvent(match, completion: { (result: Result<String?, Error>) in
                 switch result {
                 case .success(_):
                     cell.eventExists = true
@@ -164,9 +171,9 @@ extension FixtureViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell: FixtureBaseCollectionViewCell
-        let match = competitionViewModel?.dateGroupedMatches?[indexPath.section].value[indexPath.row]
+        let match = competitionViewModel.dateGroupedMatches?[indexPath.section].value[indexPath.row]
 
-        if competitionViewModel?.filter == .results {
+        if competitionViewModel.filter == .results {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
         } else {
             let fixtureCell = collectionView.dequeueReusableCell(withReuseIdentifier: FixtureCollectionViewCell.identifier, for: indexPath) as! FixtureCollectionViewCell
@@ -174,7 +181,7 @@ extension FixtureViewController: UICollectionViewDataSource {
             fixtureCell.starButton.addTarget(self, action: #selector(toggleMatchEvent(_:)), for: .touchUpInside)
 
             if let matchEvent = match {
-                fixtureCell.eventExists = competitionViewModel?.eventAlreadyExists(event: matchEvent)
+                fixtureCell.eventExists = competitionViewModel.eventAlreadyExists(event: matchEvent)
             }
             cell = fixtureCell
         }
@@ -186,7 +193,7 @@ extension FixtureViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: fixtureHeader, for: indexPath) as! FixtureHeaderCollectionReusableView
-        header.configure(date: competitionViewModel?.dateGroupedMatches?[indexPath.section].key)
+        header.configure(date: competitionViewModel.dateGroupedMatches?[indexPath.section].key)
         return header
     }
 }
@@ -195,7 +202,7 @@ extension FixtureViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var columns: CGFloat = 1
         if UIScreen.main.bounds.width >= 800  {
-            if let matches = competitionViewModel?.dateGroupedMatches {
+            if let matches = competitionViewModel.dateGroupedMatches {
                 let matchNum = matches[indexPath.section].value.count
                 if matchNum > 1  && !(matchNum % 2 == 1 && indexPath.row == matchNum - 1) {
                 columns = 2
