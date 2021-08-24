@@ -47,6 +47,7 @@ class CompetitionViewModel {
     }
     let apiClient: ApiClient
     
+    var standings: [Standing]?
     var matches: [Match]?
     var dateGroupedMatches: [Dictionary<Date, [Match?]>.Element]?
     
@@ -109,15 +110,9 @@ class CompetitionViewModel {
         }
     }
     
-    func loadFixtures(completion: @escaping (Result<MatchesResponse, ApiError>) -> Void) {
+    func loadData<T>(completion: @escaping (Result<T, ApiError>) -> Void) where T: Decodable {
         apiClient.fetchResource(completion: completion)
     }
-    
-    //
-    func loadStandings(completion: @escaping (Result<StandingsResponse, ApiError>) -> Void) {
-        apiClient.fetchResource(completion: completion)
-    }
-    //
     
     func arrangeDates() {
         filterDates()

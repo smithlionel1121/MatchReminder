@@ -99,7 +99,7 @@ class FixtureViewController: UIViewController {
     }
     
     func loadFixtures() {
-        competitionViewModel.loadFixtures { (result: Result<MatchesResponse, ApiError>) in
+        competitionViewModel.loadData { (result: Result<MatchesResponse, ApiError>) in
             switch result {
             case .success(let matchResponse):
                 DispatchQueue.main.async { [weak self] in
