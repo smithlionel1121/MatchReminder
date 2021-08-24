@@ -21,6 +21,8 @@ class StandingsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         setTableViewConstraints()
+        
+        tableView.register(StandingsTableViewCell.self, forCellReuseIdentifier: StandingsTableViewCell.identifier)
     }
     
     func setTableViewConstraints() {
@@ -41,7 +43,9 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: standingsCell, for: indexPath) as! StandingsTableViewCell
+        cell.textLabel?.text = "\(indexPath.row + 1). Team Name"
+        return cell
     }
     
 }

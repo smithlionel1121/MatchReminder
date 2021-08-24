@@ -11,6 +11,7 @@
 		70440FF826C00B560071BC44 /* URLSession+NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70440FF726C00B560071BC44 /* URLSession+NetworkSession.swift */; };
 		705A953C26D2D8BC00E87B6C /* Standings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A953B26D2D8BC00E87B6C /* Standings.swift */; };
 		705A954226D50BD400E87B6C /* StandingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A954126D50BD400E87B6C /* StandingsViewController.swift */; };
+		705A954426D5110600E87B6C /* StandingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A954326D5110600E87B6C /* StandingsTableViewCell.swift */; };
 		708FFA9526CFC50400795ED3 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708FFA9426CFC50400795ED3 /* TabBarViewController.swift */; };
 		70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */; };
 		70AC7ED426AAEB3C00E74AC8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED326AAEB3C00E74AC8 /* SceneDelegate.swift */; };
@@ -51,6 +52,7 @@
 		70440FF726C00B560071BC44 /* URLSession+NetworkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+NetworkSession.swift"; sourceTree = "<group>"; };
 		705A953B26D2D8BC00E87B6C /* Standings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Standings.swift; sourceTree = "<group>"; };
 		705A954126D50BD400E87B6C /* StandingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsViewController.swift; sourceTree = "<group>"; };
+		705A954326D5110600E87B6C /* StandingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsTableViewCell.swift; sourceTree = "<group>"; };
 		708FFA9426CFC50400795ED3 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		70AC7ECE26AAEB3C00E74AC8 /* Match Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Match Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				70B6EB6326C6D396004B8A2B /* ResultCollectionViewCell.swift */,
 				70B6EB5826C14D75004B8A2B /* CompetitionSelectionView.swift */,
 				70440FF426BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift */,
+				705A954326D5110600E87B6C /* StandingsTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				70AC7F0E26B2D87100E74AC8 /* Match.swift in Sources */,
 				70B6EB5926C14D75004B8A2B /* CompetitionSelectionView.swift in Sources */,
 				705A953C26D2D8BC00E87B6C /* Standings.swift in Sources */,
+				705A954426D5110600E87B6C /* StandingsTableViewCell.swift in Sources */,
 				708FFA9526CFC50400795ED3 /* TabBarViewController.swift in Sources */,
 				70B6EB6C26C959F9004B8A2B /* Bundle+DisplayName.swift in Sources */,
 				70AC7F1C26B4561300E74AC8 /* FixtureCollectionViewCell.swift in Sources */,
