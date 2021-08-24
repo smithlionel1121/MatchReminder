@@ -11,7 +11,16 @@ class StandingsTableViewCell: UITableViewCell {
     
     static let identifier = standingsCell
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    private var contentStackView = UIStackView()
+    
+    var standing: Standing? {
+        didSet {
+            teamNameLabel.text = standing?.team.name
+        }
+    }
+    
+    var teamNameLabel = UILabel()
+        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
 
@@ -19,4 +28,21 @@ class StandingsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configureCell(standing: Standing?) {
+        self.standing = standing
+        contentView.addSubview(contentStackView)
+        configureContentStackView()
+    }
+    
+    func configureContentStackView() {
+        contentStackView.addArrangedSubview(teamNameLabel)
+        setContentStackViewConstraints()
+    }
+    
+    func setContentStackViewConstraints() {
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20)
+        ])
+    }
 }

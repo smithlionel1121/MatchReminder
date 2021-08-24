@@ -63,7 +63,7 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: standingsCell, for: indexPath) as! StandingsTableViewCell
         guard let standing = competitionViewModel.standings?[indexPath.row] else { return cell }
-        cell.textLabel?.text = "\(standing.position). \(standing.team.name)"
+        cell.configureCell(standing: standing)
         return cell
     }
     
