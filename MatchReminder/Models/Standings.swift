@@ -8,14 +8,14 @@
 import Foundation
 
 struct StandingsResponse: Decodable {
-    var standings: [Standing]
+    var standings: [StandingsInfo]
     
-    struct Standing: Decodable {
-        var table: [Table]
+    struct StandingsInfo: Decodable {
+        var table: [Standing]
     }
 }
 
-struct Table: Decodable {
+struct Standing: Decodable {
     var position: Int
     var team: Team
     var playedGames: Int
