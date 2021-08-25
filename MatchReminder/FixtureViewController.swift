@@ -30,7 +30,7 @@ class FixtureViewController: UIViewController {
         
         configureFilterSegmentControlTitleView()
         configureCollectionView()
-        configureCompetitionView()
+        configureCompetitionSelectionView()
         
         setUpConstraints()
     }
@@ -65,7 +65,7 @@ class FixtureViewController: UIViewController {
         view.addSubview(collectionView)
     }
     
-    private func configureCompetitionView() {
+    private func configureCompetitionSelectionView() {
         view.addSubview(competitionSelectionView)
         
         competitionPicker.delegate = self

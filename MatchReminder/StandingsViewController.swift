@@ -12,9 +12,14 @@ class StandingsViewController: UIViewController {
     let tableView = UITableView()
     
     let competitionViewModel = CompetitionViewModel(competitionData: .standings)
-
+    
+    private var competitionSelectionView = CompetitionSelectionView(frame: .zero)
+    private var competitionPicker = UIPickerView()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCompetitionSelectionView()
         configureTableView()
         loadStandings()
     }
@@ -23,7 +28,24 @@ class StandingsViewController: UIViewController {
         super.viewWillLayoutSubviews()
         tableView.reloadData()
     }
-
+    private func configureCompetitionSelectionView() {
+        view.addSubview(competitionSelectionView)
+        
+        competitionPicker.delegate = self
+        competitionPicker.dataSource = self
+        
+        competitionSelectionView.configure(pickerView: competitionPicker, competitionViewModel: competitionViewModel, completion: loadStandings)
+        setUpCompetitionSelectionViewConstraints()
+    }
+    func setUpCompetitionSelectionViewConstraints() {
+        competitionSelectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            competitionSelectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            competitionSelectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            competitionSelectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+    }
+    
     func configureTableView() {
         view.addSubview(tableView)
         tableView.dataSource = self
@@ -37,7 +59,7 @@ class StandingsViewController: UIViewController {
     func setTableViewConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: competitionSelectionView.safeAreaLayoutGuide.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -84,5 +106,26 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
+    }
+}
+
+extension StandingsViewController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return Competition.allCases[row].rawValue
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        competitionSelectionView.selectedCompetition = Competition.allCases[row]
+    }
+}
+
+extension StandingsViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return Competition.allCases.count
     }
 }
