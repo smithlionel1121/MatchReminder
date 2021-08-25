@@ -117,11 +117,24 @@ class StandingsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configureOrientation() {
+        if UIScreen.main.bounds.width < 800 {
+            goalsForLabel.isHidden = true
+            goalsAgainstLabel.isHidden = true
+            goalDifferenceLabel.isHidden = true
+        } else  {
+            goalsForLabel.isHidden = false
+            goalsAgainstLabel.isHidden = false
+            goalDifferenceLabel.isHidden = false
+        }
+    }
+    
     func configureCell(standing: Standing?) {
         self.standing = standing
         self.backgroundColor = .orange
         contentView.addSubview(contentStackView)
         configureContentStackView()
+        configureOrientation()
     }
     
     func configureContentStackView() {

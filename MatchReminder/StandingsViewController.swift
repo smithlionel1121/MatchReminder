@@ -19,6 +19,11 @@ class StandingsViewController: UIViewController {
         loadStandings()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        tableView.reloadData()
+    }
+
     func configureTableView() {
         view.addSubview(tableView)
         tableView.dataSource = self
@@ -65,6 +70,7 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: StandingsTableViewCell.identifier, for: indexPath) as! StandingsTableViewCell
         guard let standing = competitionViewModel.standings?[indexPath.row] else { return cell }
         cell.configureCell(standing: standing)
+        cell.configureOrientation()
         return cell
     }
     
@@ -72,6 +78,7 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = StandingsTableViewCell(style: .default, reuseIdentifier: StandingsTableViewCell.identifier)
         cell.setColourScheme(backgroundColor: .black, textColor: .white, fontWeight: .semibold)
         cell.configureCell(standing: nil)
+        cell.configureOrientation()
         return cell
     }
     
