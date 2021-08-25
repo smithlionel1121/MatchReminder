@@ -62,10 +62,20 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: standingsCell, for: indexPath) as! StandingsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: StandingsTableViewCell.identifier, for: indexPath) as! StandingsTableViewCell
         guard let standing = competitionViewModel.standings?[indexPath.row] else { return cell }
         cell.configureCell(standing: standing)
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = StandingsTableViewCell(style: .default, reuseIdentifier: StandingsTableViewCell.identifier)
+        cell.setColourScheme(backgroundColor: .black, textColor: .white, fontWeight: .semibold)
+        cell.configureCell(standing: nil)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
 }
