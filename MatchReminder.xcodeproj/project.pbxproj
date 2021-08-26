@@ -12,6 +12,7 @@
 		705A953C26D2D8BC00E87B6C /* Standings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A953B26D2D8BC00E87B6C /* Standings.swift */; };
 		705A954226D50BD400E87B6C /* StandingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A954126D50BD400E87B6C /* StandingsViewController.swift */; };
 		705A954426D5110600E87B6C /* StandingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A954326D5110600E87B6C /* StandingsTableViewCell.swift */; };
+		705A954A26D668E200E87B6C /* CompetitionSelectionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705A954926D668E100E87B6C /* CompetitionSelectionPicker.swift */; };
 		708FFA9526CFC50400795ED3 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708FFA9426CFC50400795ED3 /* TabBarViewController.swift */; };
 		70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */; };
 		70AC7ED426AAEB3C00E74AC8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC7ED326AAEB3C00E74AC8 /* SceneDelegate.swift */; };
@@ -53,6 +54,7 @@
 		705A953B26D2D8BC00E87B6C /* Standings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Standings.swift; sourceTree = "<group>"; };
 		705A954126D50BD400E87B6C /* StandingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsViewController.swift; sourceTree = "<group>"; };
 		705A954326D5110600E87B6C /* StandingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsTableViewCell.swift; sourceTree = "<group>"; };
+		705A954926D668E100E87B6C /* CompetitionSelectionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompetitionSelectionPicker.swift; sourceTree = "<group>"; };
 		708FFA9426CFC50400795ED3 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		70AC7ECE26AAEB3C00E74AC8 /* Match Reminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Match Reminder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AC7ED126AAEB3C00E74AC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				70AC7F0126AB098800E74AC8 /* Models */,
 				70AC7ED526AAEB3C00E74AC8 /* FixtureViewController.swift */,
 				705A954126D50BD400E87B6C /* StandingsViewController.swift */,
+				705A954926D668E100E87B6C /* CompetitionSelectionPicker.swift */,
 				708FFA9426CFC50400795ED3 /* TabBarViewController.swift */,
 				70AC7F1626B4473D00E74AC8 /* View Models */,
 				70AC7EDA26AAEB3E00E74AC8 /* Assets.xcassets */,
@@ -308,6 +311,7 @@
 				70AC7ED226AAEB3C00E74AC8 /* AppDelegate.swift in Sources */,
 				70440FF526BBFE040071BC44 /* FixtureHeaderCollectionReusableView.swift in Sources */,
 				70B6EB6426C6D396004B8A2B /* ResultCollectionViewCell.swift in Sources */,
+				705A954A26D668E200E87B6C /* CompetitionSelectionPicker.swift in Sources */,
 				70B6EB5C26C1820B004B8A2B /* Competition.swift in Sources */,
 				70AC7F1826B4476600E74AC8 /* CompetitionViewModel.swift in Sources */,
 				70AC7F0B26B1ABF600E74AC8 /* .envvar.swift in Sources */,

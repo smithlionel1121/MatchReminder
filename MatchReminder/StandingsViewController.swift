@@ -16,12 +16,15 @@ class StandingsViewController: UIViewController {
     private var competitionSelectionView = CompetitionSelectionView(frame: .zero)
     private var competitionPicker = UIPickerView()
     
+    var competitionSelectionPicker: CompetitionSelectionPicker?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadStandings()
+        
+        competitionSelectionPicker = CompetitionSelectionPicker(competitionSelectionView: self.competitionSelectionView)
         configureCompetitionSelectionView()
         configureTableView()
-        loadStandings()
     }
     
     override func viewWillLayoutSubviews() {
@@ -31,8 +34,8 @@ class StandingsViewController: UIViewController {
     private func configureCompetitionSelectionView() {
         view.addSubview(competitionSelectionView)
         
-        competitionPicker.delegate = self
-        competitionPicker.dataSource = self
+        competitionPicker.delegate = competitionSelectionPicker
+        competitionPicker.dataSource = competitionSelectionPicker
         
         competitionSelectionView.configure(pickerView: competitionPicker, competitionViewModel: competitionViewModel, completion: loadStandings)
         setUpCompetitionSelectionViewConstraints()
@@ -106,26 +109,5 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
-    }
-}
-
-extension StandingsViewController: UIPickerViewDelegate {
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Competition.allCases[row].rawValue
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        competitionSelectionView.selectedCompetition = Competition.allCases[row]
-    }
-}
-
-extension StandingsViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Competition.allCases.count
     }
 }

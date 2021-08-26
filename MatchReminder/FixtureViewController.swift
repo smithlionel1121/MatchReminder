@@ -20,14 +20,16 @@ class FixtureViewController: UIViewController {
     private var competitionSelectionView = CompetitionSelectionView(frame: .zero)
     private var competitionPicker = UIPickerView()
     
+    var competitionSelectionPicker: CompetitionSelectionPicker?
+    
     var competitionViewModel = CompetitionViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         loadFixtures()
         
+        competitionSelectionPicker = CompetitionSelectionPicker(competitionSelectionView: self.competitionSelectionView)
         configureFilterSegmentControlTitleView()
         configureCollectionView()
         configureCompetitionSelectionView()
@@ -67,9 +69,8 @@ class FixtureViewController: UIViewController {
     
     private func configureCompetitionSelectionView() {
         view.addSubview(competitionSelectionView)
-        
-        competitionPicker.delegate = self
-        competitionPicker.dataSource = self
+        competitionPicker.delegate = competitionSelectionPicker
+        competitionPicker.dataSource = competitionSelectionPicker
         
         competitionSelectionView.configure(pickerView: competitionPicker, competitionViewModel: competitionViewModel, completion: loadFixtures)
     }
@@ -221,26 +222,5 @@ extension FixtureViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.size.width, height: 40)
-    }
-}
-
-extension FixtureViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        return Competition.allCases[row].rawValue
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        competitionSelectionView.selectedCompetition = Competition.allCases[row]
-    }
-}
-
-extension FixtureViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Competition.allCases.count
     }
 }
