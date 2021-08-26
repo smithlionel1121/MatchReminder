@@ -54,6 +54,7 @@ class StandingsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 100
+        tableView.backgroundColor = .black
         setTableViewConstraints()
         
         tableView.register(StandingsTableViewCell.self, forCellReuseIdentifier: StandingsTableViewCell.identifier)

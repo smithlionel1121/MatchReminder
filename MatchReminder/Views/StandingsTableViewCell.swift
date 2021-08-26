@@ -132,6 +132,11 @@ class StandingsTableViewCell: UITableViewCell {
     func configureCell(standing: Standing?) {
         self.standing = standing
         self.backgroundColor = .orange
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .systemOrange
+        
+        self.selectedBackgroundView = backgroundView
         contentView.addSubview(contentStackView)
         configureContentStackView()
         configureOrientation()
