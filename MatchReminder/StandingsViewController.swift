@@ -104,8 +104,7 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
         if let teamId = standing.team.id {
             teamViewController.competitionViewModel.resourcePath = "teams/\(teamId)/matches"
         }
-        
-        self.navigationController?.pushViewController(teamViewController, animated: false)
+        self.navigationController?.pushViewController(teamViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

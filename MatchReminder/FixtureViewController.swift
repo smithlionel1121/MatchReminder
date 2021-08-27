@@ -27,6 +27,7 @@ class FixtureViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        view.backgroundColor = .black
         loadFixtures()
         
         competitionSelectionPicker = CompetitionSelectionPicker(competitionSelectionView: self.competitionSelectionView)
@@ -52,7 +53,6 @@ class FixtureViewController: UIViewController {
         let filterSegmentedControl = UISegmentedControl(items: items)
         filterSegmentedControl.selectedSegmentIndex = CompetitionViewModel.Filter.allCases.firstIndex {$0 == competitionViewModel.filter } ?? 0
         filterSegmentedControl.sizeToFit()
-        filterSegmentedControl.tintColor = .red
         filterSegmentedControl.addTarget(self, action: #selector(segmentControlChanged(_:)), for: .valueChanged)
         self.navigationItem.titleView = filterSegmentedControl
     }
