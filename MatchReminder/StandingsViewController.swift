@@ -92,6 +92,22 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
         return competitionViewModel.standings?.count ?? 0
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let standing = competitionViewModel.standings?[indexPath.row] else { return }
+
+        let teamViewController = FixtureViewController()
+        
+        teamViewController.competitionViewModel.competitionData = .matches
+        teamViewController.competitionSelectionView.competitionField.isHidden = true
+        teamViewController.competitionSelectionView.competitionLabel.text = standing.team.name
+        teamViewController.competitionSelectionView.competitionLabel.textAlignment = .center
+        if let teamId = standing.team.id {
+            teamViewController.competitionViewModel.resourcePath = "teams/\(teamId)/matches"
+        }
+        
+        self.navigationController?.pushViewController(teamViewController, animated: false)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: StandingsTableViewCell.identifier, for: indexPath) as! StandingsTableViewCell
         guard let standing = competitionViewModel.standings?[indexPath.row] else { return cell }

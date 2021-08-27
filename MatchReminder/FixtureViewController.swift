@@ -17,7 +17,7 @@ class FixtureViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return collectionView
     }()
-    private var competitionSelectionView = CompetitionSelectionView(frame: .zero)
+    var competitionSelectionView = CompetitionSelectionView(frame: .zero)
     private var competitionPicker = UIPickerView()
     
     var competitionSelectionPicker: CompetitionSelectionPicker?

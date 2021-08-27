@@ -14,7 +14,7 @@ class CompetitionSelectionView: UIView {
     var completion: (() -> Void)?
 
     private var stackView = UIStackView()
-    private var competitionLabel: UILabel = {
+    var competitionLabel: UILabel = {
         let label = UILabel()
         label.text = "Competition:"
         label.textColor = .white
