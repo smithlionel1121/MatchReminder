@@ -99,8 +99,18 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
         
         teamViewController.competitionViewModel.competitionData = .matches
         teamViewController.competitionSelectionView.competitionField.isHidden = true
-        teamViewController.competitionSelectionView.competitionLabel.text = standing.team.name
         teamViewController.competitionSelectionView.competitionLabel.textAlignment = .center
+
+        let label = teamViewController.competitionSelectionView.competitionLabel
+        
+        var formerAttributes = label.attributedText?.attributes(at: 0, effectiveRange: nil)
+        let font = UIFont.systemFont(ofSize: label.font!.pointSize + 3, weight: .bold)
+        
+        formerAttributes?.updateValue(font, forKey: NSAttributedString.Key.font)
+        formerAttributes?.updateValue(NSUnderlineStyle.single.rawValue, forKey: NSAttributedString.Key.underlineStyle)
+
+        teamViewController.competitionSelectionView.competitionLabel.attributedText = NSAttributedString(string: standing.team.name, attributes: formerAttributes)
+
         if let teamId = standing.team.id {
             teamViewController.competitionViewModel.resourcePath = "teams/\(teamId)/matches"
         }

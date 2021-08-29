@@ -16,10 +16,8 @@ class CompetitionSelectionView: UIView {
     private var stackView = UIStackView()
     var competitionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Competition:"
-        label.textColor = .white
-        label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: label.font!.pointSize, weight: .medium)
+        let font = UIFont.systemFont(ofSize: label.font!.pointSize, weight: .medium)
+        label.attributedText = NSAttributedString(string: "Competition:", attributes: [NSAttributedString.Key.font : font, NSAttributedString.Key.foregroundColor: UIColor.white])
         return label
     }()
     
