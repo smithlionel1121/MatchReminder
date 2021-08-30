@@ -23,6 +23,8 @@ class FixtureViewController: UIViewController {
     var competitionSelectionPicker: CompetitionSelectionPicker?
     
     var competitionViewModel = CompetitionViewModel()
+    
+    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,12 +39,7 @@ class FixtureViewController: UIViewController {
         
         setUpConstraints()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        loadFixtures()
-    }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
@@ -64,6 +61,9 @@ class FixtureViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        configureRefreshControl()
+        
         view.addSubview(collectionView)
     }
     
@@ -73,6 +73,12 @@ class FixtureViewController: UIViewController {
         competitionPicker.dataSource = competitionSelectionPicker
         
         competitionSelectionView.configure(pickerView: competitionPicker, competitionViewModel: competitionViewModel, completion: loadFixtures)
+    }
+    
+    private func configureRefreshControl() {
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        refreshControl.tintColor = UIColor.systemOrange
     }
     
     func setUpConstraints() {
@@ -124,6 +130,14 @@ class FixtureViewController: UIViewController {
         competitionViewModel.arrangeDates()
         collectionView.setContentOffset(.zero, animated: true)
         collectionView.reloadData()
+    }
+    
+    @objc
+    private func didPullToRefresh(_ sender: Any) {
+        loadFixtures()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.refreshControl.endRefreshing()
+        }
     }
 }
 

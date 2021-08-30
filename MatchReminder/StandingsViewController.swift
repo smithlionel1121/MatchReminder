@@ -17,6 +17,7 @@ class StandingsViewController: UIViewController {
     private var competitionPicker = UIPickerView()
     
     var competitionSelectionPicker: CompetitionSelectionPicker?
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,12 +50,21 @@ class StandingsViewController: UIViewController {
         ])
     }
     
+    private func configureRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        refreshControl.tintColor = UIColor.systemOrange
+    }
+    
     func configureTableView() {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 100
         tableView.backgroundColor = .black
+        
+        configureRefreshControl()
+        
         setTableViewConstraints()
         
         tableView.register(StandingsTableViewCell.self, forCellReuseIdentifier: StandingsTableViewCell.identifier)
@@ -71,6 +81,7 @@ class StandingsViewController: UIViewController {
     }
     
     func loadStandings() {
+        print("Running")
         competitionViewModel.loadData { (result: Result<StandingsResponse, ApiError>) in
             switch result {
             case .success(let standingsResponse):            
@@ -85,6 +96,13 @@ class StandingsViewController: UIViewController {
         }
     }
     
+    @objc
+    private func didPullToRefresh(_ sender: Any) {
+        loadStandings()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.refreshControl.endRefreshing()
+        }
+    }
 }
 
 extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
