@@ -26,6 +26,7 @@ class StandingsViewController: UIViewController {
         competitionSelectionPicker = CompetitionSelectionPicker(competitionSelectionView: self.competitionSelectionView)
         configureCompetitionSelectionView()
         configureTableView()
+        self.navigationItem.title = "Standings"
     }
     
     override func viewWillLayoutSubviews() {
@@ -128,9 +129,11 @@ extension StandingsViewController: UITableViewDataSource, UITableViewDelegate {
         formerAttributes?.updateValue(NSUnderlineStyle.single.rawValue, forKey: NSAttributedString.Key.underlineStyle)
 
         teamViewController.competitionSelectionView.competitionLabel.attributedText = NSAttributedString(string: standing.team.name, attributes: formerAttributes)
-
+        
         if let teamId = standing.team.id {
-            teamViewController.competitionViewModel.resourcePath = "teams/\(teamId)/matches"
+            teamViewController.competitionViewModel.dataId = "\(teamId)"
+            teamViewController.competitionViewModel.competitionData = .matches
+            teamViewController.competitionViewModel.resourceBase = .teams
         }
         self.navigationController?.pushViewController(teamViewController, animated: true)
     }

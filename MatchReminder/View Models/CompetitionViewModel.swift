@@ -24,19 +24,44 @@ class CompetitionViewModel {
     }
 
     enum CompetitionData: String, CaseIterable {
-        case matches = "Matches"
-        case standings = "Standings"
+        case matches = "matches"
+        case standings = "standings"
+    }
+    
+    enum ResourceBase: String, CaseIterable {
+        case competitions
+        case teams
     }
     
     var competition: Competition {
         didSet {
-            resourcePath = "competitions/\(competition.id)/\(competitionData)"
+            dataId = competition.id
+        }
+    }
+    
+    var team: Team? {
+        didSet {
+            if let teamId = team?.id {
+                dataId = "\(teamId)"
+            }
         }
     }
     
     var competitionData: CompetitionData {
         didSet {
-            resourcePath = "competitions/\(competition.id)/\(competitionData)"
+            resourcePath = "\(resourceBase)/\(dataId)/\(competitionData)"
+        }
+    }
+    
+    var resourceBase: ResourceBase {
+        didSet {
+            resourcePath = "\(resourceBase)/\(dataId)/\(competitionData)"
+        }
+    }
+    
+    var dataId: String {
+        didSet {
+            resourcePath = "\(resourceBase)/\(dataId)/\(competitionData)"
         }
     }
     
@@ -58,10 +83,19 @@ class CompetitionViewModel {
     private let eventStore = EKEventStore()
     var calendar: EKCalendar
 
-    init(competition: Competition = Competition.allCases[0], competitionData: CompetitionData = CompetitionData.allCases[0]) {
+    init(competition: Competition = Competition.allCases[0], competitionData: CompetitionData = CompetitionData.allCases[0], team: Team? = nil, resourceBase: ResourceBase = ResourceBase.allCases[0]) {
         self.competition = competition
         self.competitionData = competitionData
-        self.resourcePath = "competitions/\(competition.id)/\(competitionData)"
+        self.team = team
+        self.resourceBase = resourceBase
+        
+        if let teamId = team?.id {
+            self.dataId = "\(teamId)"
+        } else {
+            self.dataId = competition.id
+        }
+    
+        self.resourcePath = "\(resourceBase)/\(dataId)/\(competitionData)"
         self.apiClient = ApiClient(session: URLSession.shared, resourcePath: resourcePath)
         self.calendar = EKCalendar(for: .event, eventStore: eventStore)
         
